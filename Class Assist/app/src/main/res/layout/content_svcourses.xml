@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:weightSum="1">
+
+    <SearchView
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="            ITEC 320 - Procedural Analysis and Design"
+        android:id="@+id/ITEC320" />
+
+    <TextView
+        android:layout_width="302dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="   ITEC 370 - Software Engineering I"
+        android:id="@+id/ITEC370"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="342dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="            CORE 201 - Topics in Critical Inquiry"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:layout_width="322dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="            HIST 102 - World History Since 1500"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="            MATH 152 - Calc and Analyt Geom II"
+        android:id="@+id/textView3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/btnLogout"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
