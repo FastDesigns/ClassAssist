@@ -5,6 +5,8 @@
     <uses-sdk />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:allowBackup="true"
@@ -33,5 +35,4 @@
             android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" >
         </activity>
     </application>
-
 </manifest>

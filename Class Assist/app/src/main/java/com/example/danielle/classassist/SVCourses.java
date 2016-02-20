@@ -63,8 +63,24 @@ public class SVCourses extends AppCompatActivity implements View.OnClickListener
             });
         }
 
-        btnLogout = (Button) findViewById(R.id.btnLogout);
+        //if s contains 1 item and that item is "Problem connecting to database", then there was an error connecting to databse. Return to login.
+        if(s.length == 1 && s[0].equals("Problem connecting to database"))
+        {
+            try
+            {
+                this.wait(3000);
+                startActivity(new Intent(SVCourses.this, Login.class));
+            }
+            catch(InterruptedException e) //if wait is interrupted, go ahead to login
+            {
+                startActivity(new Intent(SVCourses.this, Login.class));
+            }
+        }
+        else
+        {
+            btnLogout = (Button) findViewById(R.id.btnLogout);
 
-        btnLogout.setOnClickListener(this);
+            btnLogout.setOnClickListener(this);
+        }
     }
 }
