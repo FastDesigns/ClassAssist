@@ -15,6 +15,9 @@ public class Attendance extends AppCompatActivity implements View.OnClickListene
 
     //Declaring variables
     Button btnLogout;
+    Button btnSM;
+    Button btnSVC;
+    Button btnTA;
 
     //method onCreate
     @Override
@@ -25,17 +28,26 @@ public class Attendance extends AppCompatActivity implements View.OnClickListene
         //Declaring the variables that are attendance, logout button
 
         btnLogout = (Button) findViewById(R.id.btnLogout);
-
+        btnSM = (Button) findViewById(R.id.btnSM);
+        btnSVC = (Button) findViewById(R.id.btnSVC);
+        btnTA = (Button) findViewById(R.id.btnTA);
 
         btnLogout.setOnClickListener(this);
+        btnSM.setOnClickListener(this);
+        btnSVC.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnLogout:
-                startActivity(new Intent(Attendance.this, Login.class));
+        if (v.getId() == R.id.btnSM) {
+            startActivity(new Intent(Attendance.this, StudentMenu.class));
+        }
+        else if (v.getId() == R.id.btnSVC) {
+            startActivity(new Intent(Attendance.this, SVCourses.class));
+        }
+        else{ // for logout button
+            startActivity(new Intent(Attendance.this, Login.class));
         }
     }
 }
