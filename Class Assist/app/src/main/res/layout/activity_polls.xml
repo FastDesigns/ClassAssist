@@ -6,49 +6,38 @@
     android:padding="10dp"
     android:layout_width="match_parent">
 
-    <Button
+    <RadioButton
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:text="Pizza"
+        android:id="@+id/radioButton"
+        android:layout_gravity="center_horizontal" />
+
+    <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:text="Submit Attendance"
-        android:id="@+id/btnSubmitAttend"
-        android:layout_gravity="center_horizontal" />
-=======
-        android:text="Take Attendance"
-        android:id="@+id/btnTA"
+        android:text="Burgers"
+        android:id="@+id/radioButton2"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="277dp"
-        android:layout_height="241dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Take My Attendance Please"
-        android:id="@+id/textView"
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salad"
+        android:id="@+id/radioButton3"
         android:layout_gravity="center_horizontal" />
 
->>>>>>> refs/remotes/FastDesigns/master
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pasta"
+        android:id="@+id/radioButton4"
+        android:layout_gravity="center_horizontal" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
         android:id="@+id/btnLogout"
         android:layout_gravity="center_horizontal" />
-<<<<<<< HEAD
 </LinearLayout>
-=======
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to Student MENU"
-        android:id="@+id/btnSM"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to CLASSES"
-        android:id="@+id/btnSVC"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
->>>>>>> refs/remotes/FastDesigns/master
