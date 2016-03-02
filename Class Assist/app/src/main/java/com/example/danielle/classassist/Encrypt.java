@@ -20,7 +20,7 @@ public class Encrypt
         }
         catch(NoSuchAlgorithmException ex)
         {
-            System.out.println("Cannot find encrytion algorithm.");
+            System.out.println("Cannot find encryption algorithm.");
         }
         catch(UnsupportedEncodingException ex)
         {
