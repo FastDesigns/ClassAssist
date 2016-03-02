@@ -4,12 +4,7 @@ public final class User
 {
     private static String username;
 
-    private User()
-    {
-        username = "";
-    }
-
-    public static void setUsername(String user)
+    public User(String user)
     {
         username = user;
     }

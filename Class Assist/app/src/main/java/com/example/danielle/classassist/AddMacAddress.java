@@ -9,13 +9,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class SignInActivity extends AsyncTask<String, Void, String>
+public class AddMacAddress extends AsyncTask<String, Void, String>
 {
-    private Login login;
+    private StudentMenu student;
 
-    public SignInActivity(Login log)
+    public AddMacAddress(StudentMenu s)
     {
-        this.login = log;
+        this.student = s;
     }
 
     protected void onPreExecute()
@@ -28,11 +28,10 @@ public class SignInActivity extends AsyncTask<String, Void, String>
     {
         try
         {
-            String username = arg0[0];
-            String password = arg0[1];
-            String link = "https://php.radford.edu/~team05/login.php";
-            String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
-            data += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+            String mac = normalizeMac(arg0[0]);
+            String link = "https://php.radford.edu/~team05/addmac/addmac.php";
+            String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(User.getUsername(), "UTF-8");
+            data += "&" + URLEncoder.encode("mac", "UTF-8") + "=" + URLEncoder.encode(mac, "UTF-8");
             URL url = new URL(link);
             URLConnection conn = url.openConnection();
 
@@ -48,25 +47,9 @@ public class SignInActivity extends AsyncTask<String, Void, String>
             String line;
 
             //read server response
-
-            while((line = reader.readLine()) != null)
+            if((line = reader.readLine()) != null)
             {
                 sb.append(line);
-                break;
-            }
-            try
-            {
-                int r = Integer.parseInt(sb.toString());
-                if(r == 1)
-                {
-                    User user = new User(username);
-                    login.showCourses();
-                    login.removeInput();
-                }
-            }
-            catch(NumberFormatException e)
-            {
-                login.incorrectLogin();
             }
             return sb.toString();
         }
@@ -77,9 +60,23 @@ public class SignInActivity extends AsyncTask<String, Void, String>
         }
     }
 
+    //removes colons from mac address string
+    private String normalizeMac(String mac)
+    {
+        String result = "";
+        String[] split = mac.split(":");
+        for(int i = 0; i < split.length; i++)
+        {
+            result += split[i];
+        }
+        return result;
+    }
+
     @Override
     protected void onPostExecute(String result)
     {
-
+        if(result.equals("false"))
+            student.failedToAddMac("Could not register device to user. Please contact teacher.");
     }
+
 }

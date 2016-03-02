@@ -9,13 +9,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class SignInActivity extends AsyncTask<String, Void, String>
+public class RequestMacAddress extends AsyncTask<String, Void, String>
 {
-    private Login login;
+    private StudentMenu student;
 
-    public SignInActivity(Login log)
+    public RequestMacAddress(StudentMenu s)
     {
-        this.login = log;
+        this.student = s;
     }
 
     protected void onPreExecute()
@@ -28,11 +28,8 @@ public class SignInActivity extends AsyncTask<String, Void, String>
     {
         try
         {
-            String username = arg0[0];
-            String password = arg0[1];
-            String link = "https://php.radford.edu/~team05/login.php";
-            String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
-            data += "&" + URLEncoder.encode("pwd", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+            String link = "https://php.radford.edu/~team05/getmac/getmac.php";
+            String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(User.getUsername(), "UTF-8");
             URL url = new URL(link);
             URLConnection conn = url.openConnection();
 
@@ -48,27 +45,11 @@ public class SignInActivity extends AsyncTask<String, Void, String>
             String line;
 
             //read server response
-
-            while((line = reader.readLine()) != null)
+            if((line = reader.readLine()) != null)
             {
                 sb.append(line);
-                break;
             }
-            try
-            {
-                int r = Integer.parseInt(sb.toString());
-                if(r == 1)
-                {
-                    User user = new User(username);
-                    login.showCourses();
-                    login.removeInput();
-                }
-            }
-            catch(NumberFormatException e)
-            {
-                login.incorrectLogin();
-            }
-            return sb.toString();
+            return line;
         }
         catch(Exception e)
         {
@@ -80,6 +61,7 @@ public class SignInActivity extends AsyncTask<String, Void, String>
     @Override
     protected void onPostExecute(String result)
     {
-
+        student.checkMacAddress(result);
     }
+
 }

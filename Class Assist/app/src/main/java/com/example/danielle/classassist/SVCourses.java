@@ -57,13 +57,13 @@ public class SVCourses extends AppCompatActivity implements View.OnClickListener
                 {
                     //      switch (v.getId()) {
                     //          case R.id.:
-                    startActivity(new Intent(SVCourses.this, Dummy.class));
+                    startActivity(new Intent(SVCourses.this, StudentMenu.class));
                 }
                 //   }
             });
         }
 
-        //if s contains 1 item and that item is "Problem connecting to database", then there was an error connecting to databse. Return to login.
+        //if s contains 1 item and that item is "Problem connecting to database", then there was an error connecting to database. Return to login.
         if(s.length == 1 && s[0].equals("Problem connecting to database"))
         {
             try
