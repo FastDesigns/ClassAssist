@@ -6,12 +6,12 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 public class GetAttendance {
-	public static String getAttendance (String[] args)
+	public static String[] getAttendance (String[] args)
     {
         try
         {
             String classname = args[0];
-            String date = args[1];
+            String date =  args[1];
             String link = "https://php.radford.edu/~team05/teacherattendance.php";
             String data = URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(classname, "UTF-8");
             data += "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8");
@@ -36,7 +36,7 @@ public class GetAttendance {
 	            sb.append(line);
 	            
 	        }
-	       return sb.toString();
+	       return sb.toString().split("&");
 	        
 	    }
 	    catch(Exception e)
@@ -44,7 +44,6 @@ public class GetAttendance {
 	        e.printStackTrace();
 
 	    }
-		return "";
+		return new String[] {""};
 	}
 }
-
