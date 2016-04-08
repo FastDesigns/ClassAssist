@@ -26,10 +26,10 @@ public class GetTeachersClasses extends Thread
 			String link = "https://php.radford.edu/~team05/getteacherclasses.php";
 	        String data = URLEncoder.encode("fname", "UTF-8") + "=" + URLEncoder.encode(fname, "UTF-8");
 	        data += "&" + URLEncoder.encode("lname", "UTF-8") + "=" + URLEncoder.encode(lname, "UTF-8");
-	
+	        
 	        URL url = new URL(link);
 	        URLConnection conn = url.openConnection();
-	
+	        
 	        conn.setDoOutput(true);
 	        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 	

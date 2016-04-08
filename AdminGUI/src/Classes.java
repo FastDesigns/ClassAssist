@@ -1,15 +1,29 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class Classes extends JPanel
@@ -53,19 +67,107 @@ public class Classes extends JPanel
 	
 	//logout
 	private JPanel logoutPanel = new JPanel();
+	
+	//private JFrame chasesMain;
 	private JButton logout = new LogoutButton("Log Out");
+	
+	
+	private JFileChooser fc;
 	
 	public Classes(View v)
 	{
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		fc = new JFileChooser();
+		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
 		this.view = v;
+		//this.chasesMain = chases;
 		this.setLayout(new BorderLayout());
 		new GetTeachers(this);
 		setupComponents();
+		addActionListeners();
 	}
 	
 	public JPanel getView()
 	{
 		return this;
+	}
+	
+	private void addActionListeners()
+	{
+		importClass.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				importAction();
+			}
+		});
+	}
+	
+	private void importAction(){
+		String classname = "";
+		if(!classes.isSelectionEmpty())
+		{
+			if(!classes.getSelectedValue().toString().equals("Select a Teacher"))
+			{
+				classname = classes.getSelectedValue().toString();
+				JFrame pop = new JFrame();
+				int result = fc.showOpenDialog(pop);
+				
+				if ( result == JFileChooser.APPROVE_OPTION) {
+					
+					File file = fc.getSelectedFile();
+					String filename = file.getName();
+					ReadFile read = new ReadFile(file, filename, classname);
+					read.setInputFile(filename);
+					try {
+						read.read();}
+					catch (IOException e) {
+						System.out.println("Learn 2 read good");
+						e.printStackTrace();
+					}
+				}
+			}
+			else
+				selectClass();
+		}
+		else
+			selectClass();
+	}
+	
+	private void selectClass()
+	{
+		final JFrame fram = new JFrame("Select Class");
+		JPanel fp = new JPanel();
+		JPanel labelPane = new JPanel();
+		JPanel okPane = new JPanel();
+		fram.add(fp);
+		fp.setLayout(new BoxLayout(fp, BoxLayout.Y_AXIS));
+		JLabel sClass = new JLabel("Please select a class");
+		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fram.dispose();
+				
+			}
+		});
+		fp.add(labelPane);
+		fp.add(okPane);
+		labelPane.add(sClass);
+		labelPane.setBorder(new EmptyBorder(0,40,0,40));
+		okPane.add(ok);
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		fram.pack();
+		fram.setVisible(true);
+		fram.setLocation(p.x - (fram.getWidth() / 2), p.y - (fram.getHeight() / 2 + ok.getHeight()));
 	}
 	
 	private void setupComponents()
@@ -111,6 +213,21 @@ public class Classes extends JPanel
 		//logout fields
 		logoutPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		logoutPanel.add(logout);
+		color();
+	}
+	
+	private void color()
+	{
+		//title and logout button
+		Color crimson = new Color(220, 20, 60);
+		Color orange = new Color(255, 140, 0);
+		adminPanel3.setBackground(orange);
+		logoutPanel.setBackground(orange);
+		
+		//orange
+		adminPanel2.setBackground(Color.white);
+		classesPanel.setBackground(Color.white);
+		buttonPanel.setBackground(Color.white);
 	}
 	
 	public void setTeachers(String[] list)
@@ -135,8 +252,11 @@ public class Classes extends JPanel
 	
 	public void setClasses(String[] l)
 	{
+		view.refresh();
+		System.out.println("yup");
 		classesPanel.remove(classPane);
-		classPane = new JScrollPane(new JList(l));
+		classes = new JList(l);
+		classPane = new JScrollPane(classes);
 		classesPanel.add(classPane, BorderLayout.PAGE_START);
 		view.refresh();
 	}
