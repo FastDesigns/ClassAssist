@@ -67,6 +67,7 @@ public class SelectClassScreen extends JPanel
 	// JFileChooser Tools
 	private String user;
 	private JFileChooser fc;
+	private String[] list;
 	
 	public SelectClassScreen(JFrame main, String teacher)
 	{
@@ -77,6 +78,7 @@ public class SelectClassScreen extends JPanel
 		makeClasses();
 		addPanels();
 		addButtons();
+		
 		fc = new JFileChooser();
 		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
 	}
@@ -201,7 +203,7 @@ public class SelectClassScreen extends JPanel
 	
 	private void logoutAction()
 	{
-		this.removeAll();
+		mainFrame.getContentPane().removeAll();
 //		this.paintImmediately(0,0,1280,720); //https://community.oracle.com/thread/1350756?start=0&tstart=0
 		StartScreen start = new StartScreen(mainFrame);
 	}
@@ -223,7 +225,8 @@ public class SelectClassScreen extends JPanel
 	 */
 	public void setStudents(String[] s)
 	{
-		stud = new StudentsLayout(s);
+		AttendanceDisplay ad = new AttendanceDisplay(s);
+		stud = new StudentsLayout(s, ad);
 		contentPanel.removeAll();
 		contentPanel.add(stud, BorderLayout.CENTER);
 		contentPanel.revalidate();
