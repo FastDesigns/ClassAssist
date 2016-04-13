@@ -148,11 +148,12 @@ public class ReadFile {
 		int id;
 		String first, last, username;
 		SubmitClassList classlist = new SubmitClassList();
+		Row row =rowIterator.next();////////////////////////////////////////////////////
 		while (rowIterator.hasNext()) {
-			Row row =rowIterator.next();
+			row =rowIterator.next();///////////////////////////////////////////////////
 			Iterator<Cell> cellIterator = row.cellIterator();
 			Cell cell = cellIterator.next();
-			Person p = new Person();
+		//	Person p = new Person();
 			// last name
 			last = cell.getStringCellValue();
 			cell = cellIterator.next();
@@ -161,6 +162,7 @@ public class ReadFile {
 			cell = cellIterator.next();
 			// user name
 			username = cell.getStringCellValue();
+			System.out.println(username);
 			cell = cellIterator.next();
 			// id
 			id = (int) cell.getNumericCellValue();

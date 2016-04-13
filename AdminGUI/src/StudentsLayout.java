@@ -53,9 +53,11 @@ public class StudentsLayout extends JPanel
 	private String[] studentList = {"Loading..."};
 	private JList<String> students = new JList<String>(studentList);
 	private JScrollPane studentPane = new JScrollPane(students);
+	private JPanel attendance;
 	
-	public StudentsLayout(String[] s)
+	public StudentsLayout(String[] s, AttendanceDisplay a)
 	{
+		attendance = a;
 		setLayout(new BorderLayout());
 		setup();
 		add(contentPanel, BorderLayout.CENTER);
@@ -69,7 +71,8 @@ public class StudentsLayout extends JPanel
 		contentPanel.add(content, BorderLayout.CENTER);
 		contentPanel.add(actionsPanel, BorderLayout.PAGE_START);
 		content.setLayout(new BorderLayout());
-		content.add(studentPane, BorderLayout.CENTER);
+		content.add(attendance);
+//		content.add(studentPane, BorderLayout.CENTER);
 		studentPane.setBorder(new EmptyBorder(10, 20, 20, 20));
 		studentPane.setBackground(Color.darkGray);
 		

@@ -12,7 +12,7 @@ public class GetStudentList extends Thread
 	
 	public GetStudentList(SelectClassScreen s, String cl)
 	{
-		screen = s;
+		this.screen = s;
 		clas = cl;
 		this.start();
 	}
@@ -47,7 +47,7 @@ public class GetStudentList extends Thread
 	        }
 	        else
 	        {
-	        	students = new String[] {"FUCKINGs Found"};
+	        	students = new String[] {"No Students Found"};
 	        }
 	        
 	        setStudents(students);

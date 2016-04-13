@@ -7,6 +7,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class ItemListRenderer extends DefaultListCellRenderer
@@ -48,6 +49,7 @@ public class ItemListRenderer extends DefaultListCellRenderer
 			label.setFont(label.getFont().deriveFont(24.0f));
 			label.setOpaque(false);
 			label.setBorder(new EmptyBorder(1, 1, 1, 1));
-			return label;
+			JPanel p = new JPanel();
+			return p;
 		}
 	}
