@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -52,6 +51,8 @@ public class MyScrollBarUI extends BasicScrollBarUI
 	{
 		JButton decreaseButton = new JButton(new ImageIcon(increase))
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Dimension getPreferredSize()
 			{
@@ -69,6 +70,8 @@ public class MyScrollBarUI extends BasicScrollBarUI
 	{
 		JButton decreaseButton = new JButton(new ImageIcon(decrease))
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Dimension getPreferredSize()
 			{

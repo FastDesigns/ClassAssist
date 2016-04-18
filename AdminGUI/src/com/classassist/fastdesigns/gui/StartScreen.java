@@ -19,6 +19,22 @@ import javax.swing.*;
 
 import com.classassist.fastdesigns.gui.SelectClassScreen;
 import com.classassist.fastdesigns.logic.DesktopSignInActivity;
+import com.classassist.fastdesigns.logic.NewMessage;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.PaintContext;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.ColorModel;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 
 public class StartScreen
 {
@@ -33,7 +49,7 @@ public class StartScreen
 	private JLabel passLabel;
 	private JLabel bufferLabel; // puts a space between login & clear buttons
 	// Panel
-	private JPanel startPanel = new JPanel();//PanelBackground("coolblue.jpg");
+	private JPanel startPanel;// = new JPanel();//PanelBackground("coolblue.jpg");
 	private JPanel loginPanel = new JPanel();
 	private JPanel contentPanel = new JPanel();
 	private JPanel userPanel = new JPanel();
@@ -42,18 +58,53 @@ public class StartScreen
 	// Frame
 	private JFrame mainFrame; // Add/remove all panels from this window
 	
+	private Image img; //background
+	private boolean missingBackground = false; //becomes true if img cannot be found
+	
+	
 	public StartScreen(JFrame main)
 	{
+		loadBackground("background.png");
 		this.mainFrame= main;
+		startPanel = new JPanel() //create the background
+		{
+			private static final long serialVersionUID = 1L;
+			@Override
+			protected void paintComponent(Graphics g)
+			{
+				super.paintComponent(g);
+				if(!missingBackground)
+				{
+					for(int x = 0; x < mainFrame.getWidth(); x+= img.getWidth(null))
+					{
+						for(int y = 0; y < mainFrame.getHeight(); y+= img.getHeight(null))
+						{
+							g.drawImage(img, x, y, null);
+						}
+					}
+				}
+			}
+		};
 		mainFrame.add(startPanel);
-		setWindow();
 		makeButtons();
 		makeFields();
 		makeLabels();
 		guiBuilder();
 	}
 	
-	private void setWindow()
+	private void loadBackground(String name)
+	{
+		try
+		{
+			img = ImageIO.read(this.getClass().getResource("res/" + name));
+		}
+		catch (IOException | IllegalArgumentException e)
+		{
+			missingBackground = true;
+		}
+	}
+	
+	public void createWindow()
 	{
 		mainFrame.setTitle("Class Assist");	
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -163,8 +214,10 @@ public class StartScreen
 		}
 		else
 		{
-			userField.setForeground(Color.red);
-			userField.setText("Invalid Credentials");
+			clearAction();
+//			userField.setForeground(Color.red);
+//			userField.setText("Invalid Credentials");
+			new NewMessage("Invalid Credentials", mainFrame);
 		}
 	}
 	
@@ -198,4 +251,86 @@ public class StartScreen
 	}
 	
 
+	//http://www.java2s.com/Code/Java/2D-Graphics-GUI/RoundGradientPaintFilldemo.htm
+	class RoundGradientPaint implements Paint {
+	    protected Point2D point;
+
+	    protected Point2D mRadius;
+
+	    protected Color mPointColor, mBackgroundColor;
+
+	    public RoundGradientPaint(double x, double y, Color pointColor,
+	        Point2D radius, Color backgroundColor) {
+	      if (radius.distance(0, 0) <= 0)
+	        throw new IllegalArgumentException("Radius must be greater than 0.");
+	      point = new Point2D.Double(x, y);
+	      mPointColor = pointColor;
+	      mRadius = radius;
+	      mBackgroundColor = backgroundColor;
+	    }
+
+	    public PaintContext createContext(ColorModel cm, Rectangle deviceBounds,
+	        Rectangle2D userBounds, AffineTransform xform, RenderingHints hints) {
+	      Point2D transformedPoint = xform.transform(point, null);
+	      Point2D transformedRadius = xform.deltaTransform(mRadius, null);
+	      return new RoundGradientContext(transformedPoint, mPointColor,
+	          transformedRadius, mBackgroundColor);
+	    }
+
+	    public int getTransparency() {
+	      int a1 = mPointColor.getAlpha();
+	      int a2 = mBackgroundColor.getAlpha();
+	      return (((a1 & a2) == 0xff) ? OPAQUE : TRANSLUCENT);
+	    }
+	  }
+	  public class RoundGradientContext implements PaintContext {
+	    protected Point2D mPoint;
+
+	    protected Point2D mRadius;
+
+	    protected Color color1, color2;
+
+	    public RoundGradientContext(Point2D p, Color c1, Point2D r, Color c2) {
+	      mPoint = p;
+	      color1 = c1;
+	      mRadius = r;
+	      color2 = c2;
+	    }
+
+	    public void dispose() {
+	    }
+
+	    public ColorModel getColorModel() {
+	      return ColorModel.getRGBdefault();
+	    }
+
+	    public Raster getRaster(int x, int y, int w, int h) {
+	      WritableRaster raster = getColorModel().createCompatibleWritableRaster(
+	          w, h);
+
+	      int[] data = new int[w * h * 4];
+	      for (int j = 0; j < h; j++) {
+	        for (int i = 0; i < w; i++) {
+	          double distance = mPoint.distance(x + i, y + j);
+	          double radius = mRadius.distance(0, 0);
+	          double ratio = distance / radius;
+	          if (ratio > 1.0)
+	            ratio = 1.0;
+
+	          int base = (j * w + i) * 4;
+	          data[base + 0] = (int) (color1.getRed() + ratio
+	              * (color2.getRed() - color1.getRed()));
+	          data[base + 1] = (int) (color1.getGreen() + ratio
+	              * (color2.getGreen() - color1.getGreen()));
+	          data[base + 2] = (int) (color1.getBlue() + ratio
+	              * (color2.getBlue() - color1.getBlue()));
+	          data[base + 3] = (int) (color1.getAlpha() + ratio
+	              * (color2.getAlpha() - color1.getAlpha()));
+	        }
+	      }
+	      raster.setPixels(0, 0, w, h, data);
+
+	      return raster;
+	    }
+	  }
 }
