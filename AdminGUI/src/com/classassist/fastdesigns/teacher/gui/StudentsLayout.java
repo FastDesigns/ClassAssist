@@ -64,6 +64,7 @@ public class StudentsLayout extends JPanel
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				Date date = new Date();
 				TakeAttendance.recordAttendance(select.getSelectedClass(), dateFormat.format(date));
+				
 			}
 		});
 	}

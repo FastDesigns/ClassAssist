@@ -36,6 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.classassist.fastdesigns.gui.MyScrollBarUI;
+import com.classassist.fastdesigns.gui.SelectClassScreen;
 
 /**
  * 
@@ -54,8 +55,10 @@ public class AttendanceDisplay extends JPanel{
 	private JPanel content = new JPanel();
 	private JPanel student = new JPanel();
 	private JScrollPane studentsPane = new JScrollPane(student);
+	private SelectClassScreen select;
 	
-	public AttendanceDisplay(String[] s){
+	public AttendanceDisplay(String[] s, SelectClassScreen sc){
+		this.select = sc;
 		student.setLayout(new BorderLayout());
 		setStudents(s);
 		studentsPane.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -134,10 +137,6 @@ public class AttendanceDisplay extends JPanel{
 	
 	private void populateStudents()
 	{
-		for(int i = 0; i < 100; i++)
-		{
-			names.add("TEST");
-		}
 		student.removeAll();
 		JPanel start = new JPanel();
 		start.setLayout(new BoxLayout(start, BoxLayout.Y_AXIS));
@@ -152,7 +151,7 @@ public class AttendanceDisplay extends JPanel{
 			s.setBackground(Color.white);
 			s.setLayout(new GridLayout(1, 3));
 			s.add(name);
-			s.add(new StatusIndicator());
+			s.add(new StatusIndicator(n, select.getSelectedClass()));
 			s.add(mac);
 			start.add(s);
 

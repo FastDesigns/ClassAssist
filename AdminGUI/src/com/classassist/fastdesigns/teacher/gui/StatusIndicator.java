@@ -17,12 +17,19 @@ import javax.swing.UIManager;
  *
  */
 public class StatusIndicator extends JButton implements ActionListener {
+	/**
+	 * Version 1
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean present;
 	private ImageIcon here;
 	private ImageIcon absent;
 	private boolean status = false;
+	private String name, cl; //cl = class
 	
-	public StatusIndicator(){
+	public StatusIndicator(String n, String c){
+		this.name = n;
+		this.cl = c;
 		// Code from Chase Abe's project 5 for ITEC 220
 		present = false;
 		this.setOpaque(true);
@@ -66,5 +73,10 @@ public class StatusIndicator extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		changeStatus();
+		
+		if(status)
+		{
+			
+		}
 	}
 }

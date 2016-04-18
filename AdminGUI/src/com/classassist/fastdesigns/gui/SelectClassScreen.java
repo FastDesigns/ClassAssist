@@ -70,7 +70,6 @@ public class SelectClassScreen extends JPanel
 	private JPanel stud;// = new StudentsLayout(new String[] {"Loading..."});;
 	// JFileChooser Tools
 	private String user;
-	private JFileChooser fc;
 	
 	public SelectClassScreen(JFrame main, String teacher)
 	{
@@ -82,8 +81,6 @@ public class SelectClassScreen extends JPanel
 		addPanels();
 		addButtons();
 		
-		fc = new JFileChooser();
-		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
 		buttonPanel.setPreferredSize(new Dimension(125, buttonPanel.getPreferredSize().height)); //adding extra width to compensate for scrollbar
 	}
 	
@@ -261,7 +258,7 @@ public class SelectClassScreen extends JPanel
 	 */
 	public void setStudents(String[] s)
 	{
-		AttendanceDisplay ad = new AttendanceDisplay(s);
+		AttendanceDisplay ad = new AttendanceDisplay(s, this);
 		stud = new StudentsLayout(s, ad, this);
 		contentPanel.removeAll();
 		contentPanel.add(stud, BorderLayout.CENTER);
@@ -269,6 +266,9 @@ public class SelectClassScreen extends JPanel
 	}
 	
 	private void importAction(){
+		new ChangeLook().fileChooserLook();
+		JFileChooser fc = new JFileChooser();
+		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
 		String classname = (String) classCombo.getSelectedItem();
@@ -294,6 +294,7 @@ public class SelectClassScreen extends JPanel
 				e.printStackTrace();
 			}
 		}
+		new ChangeLook().programLook();
 	}
 	
 	private void exportAction()

@@ -41,6 +41,20 @@ public class NewMessage extends JPanel
 		startTimer();
 	}
 	
+	public NewMessage(String msg, JFrame m)
+	{
+		this.mess = msg;
+		this.setBackground(new Color(0, 0, 0, 0));
+		create();
+		centerOnFrame(m);
+		startTimer();
+	}
+	
+	private void centerOnFrame(JFrame f)
+	{
+		m.setLocation(f.getX() + (f.getWidth() / 2) - (m.getWidth() / 2), f.getY() + (f.getHeight() / 2) - (m.getHeight() / 2));
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g)
 	{

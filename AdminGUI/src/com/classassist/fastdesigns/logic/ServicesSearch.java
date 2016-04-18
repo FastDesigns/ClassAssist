@@ -48,6 +48,7 @@ public class ServicesSearch {
 
                 /* To find bluetooth devices */
                 public void inquiryCompleted(int discType) {
+                	System.out.println("done?");
                 }
 
                 /* Find service URL of bluetooth device */
