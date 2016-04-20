@@ -30,12 +30,14 @@ public class StudentsLayout extends JPanel
 	private JPanel actionsPanel = new JPanel();
 	private JButton attend = new MyButton("Take Attendance");
 	private JPanel attendance;
+	private AttendanceDisplay at;
 	private SelectClassScreen select;
 	
 	public StudentsLayout(String[] s, AttendanceDisplay a, SelectClassScreen sel)
 	{
 		this.select = sel;
 		attendance = a;
+		at = a;
 		setLayout(new BorderLayout());
 		setup();
 		add(contentPanel, BorderLayout.CENTER);
@@ -61,10 +63,17 @@ public class StudentsLayout extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-				Date date = new Date();
-				TakeAttendance.recordAttendance(select.getSelectedClass(), dateFormat.format(date));
-				
+				final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				final Date date = new Date();
+				Thread thread = new Thread(new Runnable()
+				{
+					public void run()
+					{
+						TakeAttendance.recordAttendance(select.getSelectedClass(), dateFormat.format(date));
+					}
+				});
+				thread.start();
+				at.startTimer();
 			}
 		});
 	}

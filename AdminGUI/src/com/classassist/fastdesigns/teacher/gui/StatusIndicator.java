@@ -69,6 +69,16 @@ public class StatusIndicator extends JButton implements ActionListener {
 		status = !status;
 	}
 	
+	/**
+	 * Changes status to true or false
+	 * @param b	true or false
+	 */
+	public void setStatus(boolean b)
+	{
+		status = b;
+		repaint();
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{

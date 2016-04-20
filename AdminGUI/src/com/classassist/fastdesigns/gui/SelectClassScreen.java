@@ -25,9 +25,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import com.classassist.fastdesigns.logic.GetClassListForTeacher;
 import com.classassist.fastdesigns.logic.GetStudentList;
+import com.classassist.fastdesigns.logic.GetTeachers;
+import com.classassist.fastdesigns.logic.GetUsername;
 import com.classassist.fastdesigns.logic.ReadFile;
 import com.classassist.fastdesigns.teacher.gui.AddStudentScreen;
 import com.classassist.fastdesigns.teacher.gui.AttendanceDisplay;
+import com.classassist.fastdesigns.teacher.gui.ChangePasswordScreen;
 import com.classassist.fastdesigns.teacher.gui.CreateClassScreen;
 import com.classassist.fastdesigns.teacher.gui.DeleteClassScreen;
 import com.classassist.fastdesigns.teacher.gui.DeleteStudentScreen;
@@ -54,10 +57,14 @@ public class SelectClassScreen extends JPanel
 	private JButton deleteClass = new TeacherButton("deleteclass.png", this);
 	private JButton addStudent = new TeacherButton("addstudent.png", this);
 	private JButton deleteStudent = new TeacherButton("deletestudent.png", this);
+	private JButton changePassword = new TeacherButton("changepassword.png", this);
+	private JButton resetPassword = new TeacherButton("resetpassword.png", this);
 	private ArrayList<JButton> btnList = new ArrayList<>();
 	// Swing Tools
+	private JLabel teacherLabel;
 	private JLabel selectLabel;
 	private JComboBox<String> classCombo = new JComboBox<String>(new String[] {"Loading..."});
+	private JComboBox<String> teacherCombo = new JComboBox<String>(new String[] {"Loading..."});
 //	private String[] classes;
 	// JFrame
 	private JFrame mainFrame;
@@ -70,7 +77,30 @@ public class SelectClassScreen extends JPanel
 	private JPanel stud;// = new StudentsLayout(new String[] {"Loading..."});;
 	// JFileChooser Tools
 	private String user;
+	private boolean admin = false;
 	
+	/**
+	 * Creates the admin GUI
+	 * @param main	the GUI window
+	 */
+	public SelectClassScreen(JFrame main)
+	{
+		this.mainFrame = main;
+		this.admin = true;
+		makeButtons();
+		makeLabel();
+		makeTeachers();
+		addPanels();
+		addButtons();
+		
+		buttonPanel.setPreferredSize(new Dimension(125, buttonPanel.getPreferredSize().height)); //adding extra width to compensate for scrollbar
+	}
+	
+	/**
+	 * Creates the teacher GUI
+	 * @param main		the gui window
+	 * @param teacher	name of teacher
+	 */
 	public SelectClassScreen(JFrame main, String teacher)
 	{
 		this.mainFrame = main;
@@ -144,10 +174,31 @@ public class SelectClassScreen extends JPanel
 				deleteStudentAction();
 			}
 		});
+		changePassword.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				changePasswordAction();
+			}
+		});
+		resetPassword.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				resetPasswordAction();
+			}
+		});
 	}
 	
 	private void makeLabel()
 	{
+		if(admin)
+		{
+			teacherLabel = new JLabel("Select Teacher");
+			teacherLabel.setForeground(Color.white);
+		}
 		selectLabel = new JLabel("Select Class");
 		selectLabel.setForeground(Color.white);
 	}
@@ -163,8 +214,16 @@ public class SelectClassScreen extends JPanel
 	}
 	
 	/**
+	 * Generates a list of teachers for teacherCombo
+	 */
+	public void makeTeachers()
+	{
+		new GetTeachers(this);
+	}
+	
+	/**
 	 * changes the list of classes the user can see
-	 * @param classes String array containing classes
+	 * @param cl String array containing classes
 	 */
 	public void setClasses(String[] cl)
 	{
@@ -174,6 +233,32 @@ public class SelectClassScreen extends JPanel
 			classCombo.addItem(clas);
 		}
 		getStudents();
+	}
+	
+	/**
+	 * changes the lsit of teachers the admin can see
+	 * @param t String array containing teachers
+	 */
+	public void setTeachers(String[] t)
+	{
+		teacherCombo.removeAllItems();
+		for(String teacher : t)
+		{
+			teacherCombo.addItem(teacher);
+		}
+		getUsername();
+		teacherComboListener();
+	}
+	
+	private void getUsername()
+	{
+		new GetUsername(this, teacherCombo.getSelectedItem().toString().split(" "));
+	}
+	
+	public void setUsername(String u)
+	{
+		this.user = u;
+		makeClasses();
 	}
 	
 	private void addPanels()
@@ -201,6 +286,11 @@ public class SelectClassScreen extends JPanel
 	private void addButtons()
 	{
 		mainFrame.setPreferredSize(new Dimension(1280, 720));
+		if(admin)
+		{
+			classesPanel.add(teacherLabel);
+			classesPanel.add(teacherCombo);
+		}
 		classesPanel.add(selectLabel);
 		classesPanel.add(classCombo);
 		classesPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
@@ -213,6 +303,10 @@ public class SelectClassScreen extends JPanel
 		btnList.add(deleteClass);
 		btnList.add(addStudent);
 		btnList.add(deleteStudent);
+		if(!admin)
+			btnList.add(changePassword);
+		if(admin)
+			btnList.add(resetPassword);
 
 		for(JButton b : btnList)
 		{
@@ -260,9 +354,7 @@ public class SelectClassScreen extends JPanel
 	{
 		AttendanceDisplay ad = new AttendanceDisplay(s, this);
 		stud = new StudentsLayout(s, ad, this);
-		contentPanel.removeAll();
-		contentPanel.add(stud, BorderLayout.CENTER);
-		contentPanel.revalidate();
+		changeContent(stud);
 	}
 	
 	private void importAction(){
@@ -301,50 +393,71 @@ public class SelectClassScreen extends JPanel
 	{
 		String className = (String) classCombo.getSelectedItem();
 		JPanel f = new ExportAttendance(className);
-		contentPanel.removeAll();
-		contentPanel.add(f, BorderLayout.CENTER);
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		changeContent(f);
 	}
 	
 	private void addClassAction()
 	{
 		JPanel addC = new CreateClassScreen(user, this);
-		contentPanel.removeAll();
-		contentPanel.add(addC, BorderLayout.CENTER);
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		changeContent(addC);
 	}
 	
 	private void deleteClassAction()
 	{
 		JPanel deleteC = new DeleteClassScreen(user, this);
-		contentPanel.removeAll();
-		contentPanel.add(deleteC, BorderLayout.CENTER);
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		changeContent(deleteC);
 	}
 	
 	private void addStudentAction()
 	{
 		JPanel addS = new AddStudentScreen(this);
-		contentPanel.removeAll();
-		contentPanel.add(addS, BorderLayout.CENTER);
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		changeContent(addS);
 	}
 	
 	private void deleteStudentAction()
 	{
 		JPanel deleteS = new DeleteStudentScreen(this);
-		contentPanel.removeAll();
-		contentPanel.add(deleteS, BorderLayout.CENTER);
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		changeContent(deleteS);
+	}
+	
+	private void changePasswordAction()
+	{
+		JPanel changeP = new ChangePasswordScreen(this, user);
+		changeContent(changeP);
+	}
+	
+	private void resetPasswordAction()
+	{
+		JPanel resetP = new ResetPasswordScreen(this);
+		changeContent(resetP);
 	}
 	
 	public String getSelectedClass()
 	{
 		return classCombo.getSelectedItem().toString();
+	}
+	
+	private void teacherComboListener()
+	{
+		teacherCombo.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				turnBorderOff();
+				changeContent(new PanelLoading());
+				classCombo.removeAllItems();
+				classCombo.addItem("Loading...");
+				getUsername();
+			}
+		});
+	}
+	
+	private void changeContent(JPanel p)
+	{
+		contentPanel.removeAll();
+		contentPanel.add(p, BorderLayout.CENTER);
+		contentPanel.revalidate();
+		contentPanel.repaint();
 	}
 }

@@ -52,6 +52,7 @@ public class CreateClassScreen extends JPanel
 	
 	public void setupComponents()
 	{
+		System.out.println(cName.getFont());
 		//add panels
 		this.add(main, BorderLayout.CENTER);
 		main.setBackground(Color.darkGray);

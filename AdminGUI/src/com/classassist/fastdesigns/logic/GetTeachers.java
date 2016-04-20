@@ -7,14 +7,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class DeleteStudent extends Thread
+import com.classassist.fastdesigns.gui.SelectClassScreen;
+
+public class GetTeachers extends Thread
 {
-	private String name, className;
+	private SelectClassScreen select;
+	private String[] list;
 	
-	public DeleteStudent(String n, String c)
+	public GetTeachers(SelectClassScreen s)
 	{
-		this.name = n;
-		this.className = c;
+		this.select = s;
 		this.start();
 	}
 	
@@ -22,13 +24,8 @@ public class DeleteStudent extends Thread
 	{
 		try
 		{
-			String[] fl = name.split(" ");
-			String fName = fl[0];
-			String lName = fl[1];
-			String link = "https://php.radford.edu/~team05/deletestudent.php";
-	        String data = URLEncoder.encode("first", "UTF-8") + "=" + URLEncoder.encode(fName, "UTF-8");
-	        data += "&" + URLEncoder.encode("last", "UTF-8") + "=" + URLEncoder.encode(lName, "UTF-8");
-	        data += "&" + URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(className, "UTF-8");
+			String link = "https://php.radford.edu/~team05/teacherlist.php";
+	        String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode("admin", "UTF-8");
 	
 	        URL url = new URL(link);
 	        URLConnection conn = url.openConnection();
@@ -40,18 +37,22 @@ public class DeleteStudent extends Thread
 	        wr.flush();
 	
 	        BufferedReader reader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-	        
+	
+	        StringBuilder sb = new StringBuilder();
 	        String line;
 	
 	        //read server response
 	        if((line = reader.readLine()) != null)
 	        {
-	            failure(line);
+	            sb.append(line);
+	            list = sb.toString().split("&");
 	        }
 	        else
 	        {
-	        	success();
+	        	String[] result = {"No Classes Found"};
+	        	list = result;
 	        }
+	        select.setTeachers(list);
 	        this.interrupt();
 	    }
 	    catch(Exception e)
@@ -61,13 +62,8 @@ public class DeleteStudent extends Thread
 	    }
 	}
 	
-	private void failure(String msg)
+	public String[] getList()
 	{
-		new NewMessage(msg);
-	}
-	
-	private void success()
-	{
-		new NewMessage("Removed Student Successfully");
+		return list;
 	}
 }
