@@ -1,3 +1,5 @@
+package com.classassist.fastdesigns.logic;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -5,14 +7,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class GetTeachers extends Thread
+public class ChangePassword extends Thread
 {
-	private Classes classes;
-	private String[] list;
+	private String user, oldPass, newPass;
 	
-	public GetTeachers(Classes c)
+	public ChangePassword(String u, String o, String n)
 	{
-		this.classes = c;
+		this.user = u;
+		this.oldPass = o;
+		this.newPass = n;
 		this.start();
 	}
 	
@@ -20,8 +23,10 @@ public class GetTeachers extends Thread
 	{
 		try
 		{
-			String link = "https://php.radford.edu/~team05/teacherlist.php";
-	        String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode("admin", "UTF-8");
+			String link = "https://php.radford.edu/~team05/changepassword.php";
+	        String data = URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
+	        data += "&" + URLEncoder.encode("oldPass", "UTF-8") + "=" + URLEncoder.encode(oldPass, "UTF-8");
+	        data += "&" + URLEncoder.encode("newPass", "UTF-8") + "=" + URLEncoder.encode(newPass, "UTF-8");
 	
 	        URL url = new URL(link);
 	        URLConnection conn = url.openConnection();
@@ -33,22 +38,18 @@ public class GetTeachers extends Thread
 	        wr.flush();
 	
 	        BufferedReader reader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-	
-	        StringBuilder sb = new StringBuilder();
+	        
 	        String line;
 	
 	        //read server response
 	        if((line = reader.readLine()) != null)
 	        {
-	            sb.append(line);
-	            list = sb.toString().split("&");
+	            failure(line);
 	        }
 	        else
 	        {
-	        	String[] result = {"No Classes Found"};
-	        	list = result;
+	        	success();
 	        }
-	        classes.setTeachers(list);
 	        this.interrupt();
 	    }
 	    catch(Exception e)
@@ -58,8 +59,13 @@ public class GetTeachers extends Thread
 	    }
 	}
 	
-	public String[] getList()
+	private void failure(String msg)
 	{
-		return list;
+		new NewMessage(msg);
+	}
+	
+	private void success()
+	{
+		new NewMessage("Changed Password Successfully");
 	}
 }

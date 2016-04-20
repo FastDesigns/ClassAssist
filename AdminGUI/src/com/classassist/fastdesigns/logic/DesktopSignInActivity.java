@@ -39,6 +39,7 @@ public class DesktopSignInActivity{
                 sb.append(line);
                 break;
             }
+            System.out.println("SFSDFSDF" + sb.toString());
             try
             {
                 int r = Integer.parseInt(sb.toString());

@@ -7,14 +7,18 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class DeleteStudent extends Thread
+import com.classassist.fastdesigns.gui.SelectClassScreen;
+
+public class GetUsername extends Thread
 {
-	private String name, className;
+	private SelectClassScreen select;
+	private String first, last;
 	
-	public DeleteStudent(String n, String c)
+	public GetUsername(SelectClassScreen s, String[] t)
 	{
-		this.name = n;
-		this.className = c;
+		this.select = s;
+		this.first = t[0];
+		this.last = t[1];
 		this.start();
 	}
 	
@@ -22,13 +26,9 @@ public class DeleteStudent extends Thread
 	{
 		try
 		{
-			String[] fl = name.split(" ");
-			String fName = fl[0];
-			String lName = fl[1];
-			String link = "https://php.radford.edu/~team05/deletestudent.php";
-	        String data = URLEncoder.encode("first", "UTF-8") + "=" + URLEncoder.encode(fName, "UTF-8");
-	        data += "&" + URLEncoder.encode("last", "UTF-8") + "=" + URLEncoder.encode(lName, "UTF-8");
-	        data += "&" + URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(className, "UTF-8");
+			String link = "https://php.radford.edu/~team05/getusername.php";
+	        String data = URLEncoder.encode("first", "UTF-8") + "=" + URLEncoder.encode(first, "UTF-8");
+	        data += "&" + URLEncoder.encode("last", "UTF-8") + "=" + URLEncoder.encode(last, "UTF-8");
 	
 	        URL url = new URL(link);
 	        URLConnection conn = url.openConnection();
@@ -40,18 +40,22 @@ public class DeleteStudent extends Thread
 	        wr.flush();
 	
 	        BufferedReader reader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-	        
-	        String line;
+	
+	        StringBuilder sb = new StringBuilder();
+	        String line, r;
 	
 	        //read server response
 	        if((line = reader.readLine()) != null)
 	        {
-	            failure(line);
+	            sb.append(line);
+	            r = sb.toString();
 	        }
 	        else
 	        {
-	        	success();
+	        	String result = "Username not found";
+	        	r = result;
 	        }
+	        select.setUsername(r);
 	        this.interrupt();
 	    }
 	    catch(Exception e)
@@ -59,15 +63,5 @@ public class DeleteStudent extends Thread
 	        e.printStackTrace();
 	        this.interrupt();
 	    }
-	}
-	
-	private void failure(String msg)
-	{
-		new NewMessage(msg);
-	}
-	
-	private void success()
-	{
-		new NewMessage("Removed Student Successfully");
 	}
 }

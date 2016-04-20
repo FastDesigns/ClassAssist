@@ -18,6 +18,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -37,6 +39,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.classassist.fastdesigns.gui.MyScrollBarUI;
 import com.classassist.fastdesigns.gui.SelectClassScreen;
+import com.classassist.fastdesigns.logic.UpdateStatus;
 
 /**
  * 
@@ -51,11 +54,18 @@ import com.classassist.fastdesigns.gui.SelectClassScreen;
  *
  */
 public class AttendanceDisplay extends JPanel{
+	/**
+	 * Version 1
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<String> names = new ArrayList<>();
+	private ArrayList<StatusIndicator> statusList = new ArrayList<>();
 	private JPanel content = new JPanel();
 	private JPanel student = new JPanel();
 	private JScrollPane studentsPane = new JScrollPane(student);
 	private SelectClassScreen select;
+	private Timer check;
+	private Timer cancel;
 	
 	public AttendanceDisplay(String[] s, SelectClassScreen sc){
 		this.select = sc;
@@ -151,7 +161,9 @@ public class AttendanceDisplay extends JPanel{
 			s.setBackground(Color.white);
 			s.setLayout(new GridLayout(1, 3));
 			s.add(name);
-			s.add(new StatusIndicator(n, select.getSelectedClass()));
+			StatusIndicator status = new StatusIndicator(n, select.getSelectedClass());
+			statusList.add(status);
+			s.add(status);
 			s.add(mac);
 			start.add(s);
 
@@ -181,6 +193,46 @@ public class AttendanceDisplay extends JPanel{
 		populateStudents();
 	}
 	
+	/**
+	 * timer checks each students attendance and updates status indicator to display accordingly
+	 */
+	public void startTimer()
+	{
+		Thread timerThread = new Thread(new Runnable()
+		{
+			public void run()
+			{
+				cancelTimer();
+				check = new Timer();
+				check.scheduleAtFixedRate(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						for(int i = 0; i < names.size(); i++)
+						{
+							new UpdateStatus(names.get(i), statusList.get(i), select.getSelectedClass());
+						}
+					}
+				}, 20, 3);
+			}
+		});
+		timerThread.start();
+	}
+	
+	private void cancelTimer()
+	{
+		cancel = new Timer();
+		cancel.schedule(new TimerTask()
+		{
+			@Override
+			public void run()
+			{
+				check.cancel();
+				check.purge();
+			}
+		}, 300000);
+	}
 	
 //	//http://www.coderanch.com/t/456966/GUI/java/give-color-JRadioButtons
 //	public void paintIcon(Component c, Graphics g, int x, int y){
