@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 
+import com.classassist.fastdesigns.logic.DeleteAttendance;
+import com.classassist.fastdesigns.logic.SetAttendance;
+
 
 /**
  * 
@@ -17,33 +20,19 @@ import javax.swing.UIManager;
  *
  */
 public class StatusIndicator extends JButton implements ActionListener {
-	/**
-	 * Version 1
-	 */
-	private static final long serialVersionUID = 1L;
 	private boolean present;
 	private ImageIcon here;
 	private ImageIcon absent;
 	private boolean status = false;
-	private String name, cl; //cl = class
+	private String username;
+	private String classname;
 	
-	public StatusIndicator(String n, String c){
-		this.name = n;
-		this.cl = c;
+	public StatusIndicator(String username, String classname){
 		// Code from Chase Abe's project 5 for ITEC 220
-		present = false;
+		this.username=username;
+		this.classname=classname;
 		this.setOpaque(true);
 		this.addActionListener(this);
-		//this.setBorder(null);
-		//absent = new ImageIcon((new ImageIcon("res/bad.png").getImage().getScaledInstance(600,100,java.awt.Image.SCALE_SMOOTH)));
-		//here  = new ImageIcon((new ImageIcon("res/good.png").getImage().getScaledInstance(600,100,java.awt.Image.SCALE_SMOOTH)));
-		//this.setIcon(absent);
-//		 try {
-//			    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
-//			   // this.setBackground(Color.RED);
-//			 } catch (Exception e) {
-//			            e.printStackTrace();
-//			 }
 		
 	}
 	
@@ -56,9 +45,7 @@ public class StatusIndicator extends JButton implements ActionListener {
 			g.setColor(Color.red);
 
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
-//		g.setColor(Color.black);
-//		g.drawRect(1, 1, getWidth() - 1, getHeight() - 1);
+		repaint();
 	}
 	
 	public boolean checkStatus(){
@@ -67,6 +54,10 @@ public class StatusIndicator extends JButton implements ActionListener {
 	
 	private void changeStatus(){
 		status = !status;
+		if(status==true)
+			SetAttendance.setAttendance(new String[]{username, classname});
+		if(status==false)
+			new DeleteAttendance(new String[]{username,classname});
 	}
 	
 	/**
@@ -84,9 +75,5 @@ public class StatusIndicator extends JButton implements ActionListener {
 	{
 		changeStatus();
 		
-		if(status)
-		{
-			
-		}
 	}
 }

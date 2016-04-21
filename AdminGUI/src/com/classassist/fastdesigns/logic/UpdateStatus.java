@@ -63,7 +63,6 @@ public class UpdateStatus
 	        {
 				status.setStatus(false);
 			}
-	        System.out.println(line);
 	    }
 	    catch(Exception e)
 	    {
