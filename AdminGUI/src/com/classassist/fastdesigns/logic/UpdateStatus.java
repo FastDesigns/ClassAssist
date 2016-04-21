@@ -66,7 +66,7 @@ public class UpdateStatus
 	    }
 	    catch(Exception e)
 	    {
-	        e.printStackTrace();
+	        //no problem, just wasn't loaded yet
 	    }
 	}
 }
