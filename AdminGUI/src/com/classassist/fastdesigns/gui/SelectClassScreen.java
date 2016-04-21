@@ -234,6 +234,17 @@ public class SelectClassScreen extends JPanel
 			classCombo.addItem(clas);
 		}
 		getStudents();
+		
+		classCombo.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				turnBorderOff();
+				changeContent(new PanelLoading());
+				getStudents();
+			}
+		});
 	}
 	
 	/**
