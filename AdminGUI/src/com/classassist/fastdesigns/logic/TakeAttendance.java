@@ -13,6 +13,5 @@ public class TakeAttendance {
 			attendance[0]=GetUserFromMac.getUser(testVector.elementAt(x));
 			SetAttendance.setAttendance(attendance);
 		}
-		System.out.println("how many times am I called?");
 	}
 }

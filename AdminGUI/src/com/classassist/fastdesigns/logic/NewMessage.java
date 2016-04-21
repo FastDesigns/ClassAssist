@@ -37,22 +37,13 @@ public class NewMessage extends JPanel
 		this.mess = msg;
 		this.setBackground(new Color(0, 0, 0, 0));
 		create();
-		centerOnMouse();
+		center();
 		startTimer();
 	}
 	
-	public NewMessage(String msg, JFrame m)
+	private void center()
 	{
-		this.mess = msg;
-		this.setBackground(new Color(0, 0, 0, 0));
-		create();
-		centerOnFrame(m);
-		startTimer();
-	}
-	
-	private void centerOnFrame(JFrame f)
-	{
-		m.setLocation(f.getX() + (f.getWidth() / 2) - (m.getWidth() / 2), f.getY() + (f.getHeight() / 2) - (m.getHeight() / 2));
+		m.setLocation(FrameSize.getX() + (FrameSize.getWidth() / 2) - (m.getWidth() / 2), FrameSize.getY() + (FrameSize.getHeight() / 2) - (m.getHeight() / 2));
 	}
 	
 	@Override
@@ -86,14 +77,6 @@ public class NewMessage extends JPanel
 		m.setBackground(new Color(0, 0, 0, 0)); //transparent background
 		m.pack();
 		m.setVisible(true);
-	}
-	
-	private void centerOnMouse()
-	{
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		int x = p.x - (getWidth() / 2);
-		int y = p.y - (getHeight() / 2);
-		m.setLocation(new Point(x, y));
 	}
 	
 	private void startTimer()
