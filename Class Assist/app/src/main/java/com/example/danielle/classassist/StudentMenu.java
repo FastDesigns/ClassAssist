@@ -49,7 +49,6 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         else if(v.getId() == R.id.btnAttendance)
         {
             takeAttendance();
-            btnAttendance.setText("Submit Again");
         }
 //        switch (v.getId()) {
 //            case R.id.btnLogout:
@@ -78,10 +77,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     //checks if bluetooth is already enabled
     private void checkBlueTooth()
     {
-        if(bTooth.isEnabled())
-            blueEnabled = true;
-        else
-            blueEnabled = false;
+        blueEnabled = bTooth.isEnabled();
     }
 
     //starts bluetooth if compatible
@@ -100,9 +96,9 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     {
         if(bTooth == null)
         {
-            //Device does not support Bluetooth. We need to gracefully disable bluetooth features.
+            //Device does not support Bluetooth.
             blueCompat = false;
-            errorDialog(R.layout.incomp_blue);
+            new NewMessage("This device does not support bluetooth,", getBaseContext());
         }
     }
 
@@ -134,10 +130,14 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
             public void run()
             {
                 if (result.equals(""))
-                    addNewMac();
-                else if (!result.equals(normalizeMac(bTooth.getAddress())))
                 {
-                    errorDialog(R.layout.wrong_user);
+                    addNewMac();
+                } else if (!result.equals(normalizeMac(bTooth.getAddress())))
+                {
+                    new NewMessage("Device is already registered to another student. Please see the teacher.", getBaseContext());
+                } else
+                {
+                    submitAttendance();
                 }
             }
         });
@@ -155,29 +155,16 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         return result;
     }
 
-    //Creates an error message
-    private void errorDialog(int layout)
-    {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(layout);
-        dialog.setTitle("Error");
-        Button btnDismiss = (Button) dialog.findViewById(R.id.dismiss);
-
-        btnDismiss.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                dialog.cancel();
-            }
-        });;
-
-        dialog.show();
-    }
-
     //adds user's mac address to database
     private void addNewMac()
     {
         new AddMacAddress(this).execute(bTooth.getAddress());
+        submitAttendance();
+    }
+
+    private void submitAttendance()
+    {
+        new SubmitAttendance(this.getBaseContext(), this).execute();
     }
 
     /**
@@ -186,5 +173,10 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     public void failedToAddMac(String msg)
     {
         System.out.println(msg); //should be a pop up or something
+    }
+
+    public void bluetoothOff()
+    {
+        bTooth.disable();
     }
 }

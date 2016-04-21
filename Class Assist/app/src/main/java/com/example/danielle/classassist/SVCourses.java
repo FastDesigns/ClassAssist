@@ -47,19 +47,18 @@ public class SVCourses extends AppCompatActivity implements View.OnClickListener
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         for(int i = 0; i < s.length; i++)
         {
+            final int index = i;
             Button myButton = new Button(this);
             myButton.setText(s[i]);
             myButton.setId(i);
-            final int id_ = myButton.getId();
+            final int id = myButton.getId();
             ll.addView(myButton, lp);
             myButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v)
                 {
-                    //      switch (v.getId()) {
-                    //          case R.id.:
                     startActivity(new Intent(SVCourses.this, StudentMenu.class));
+                    new SelectedClass(s[index]);
                 }
-                //   }
             });
         }
 
