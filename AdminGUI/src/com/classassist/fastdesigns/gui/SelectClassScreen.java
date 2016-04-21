@@ -74,7 +74,7 @@ public class SelectClassScreen extends JPanel
 	private JScrollPane buttonScroll = new JScrollPane(buttonPanel);
 	private JPanel contentPanel = new JPanel();
 	private JPanel logoutPanel = new JPanel();
-	private JPanel stud;// = new StudentsLayout(new String[] {"Loading..."});;
+	private StudentsLayout stud;// = new StudentsLayout(new String[] {"Loading..."});;
 	// JFileChooser Tools
 	private String user;
 	private boolean admin = false;
@@ -355,6 +355,11 @@ public class SelectClassScreen extends JPanel
 		AttendanceDisplay ad = new AttendanceDisplay(s, this);
 		stud = new StudentsLayout(s, ad, this);
 		changeContent(stud);
+	}
+	
+	public void notScanning()
+	{
+		stud.notScanning();
 	}
 	
 	private void importAction(){

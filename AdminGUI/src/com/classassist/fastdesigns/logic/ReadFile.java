@@ -88,14 +88,12 @@ public class ReadFile {
 	public void CSV(FileInputStream file) {
 		int comma, id;
 		String line, first, last, username;
-//		ArrayList<Person> list = new ArrayList<Person>();
 		File csv = input;
 		Scanner scan;
 		SubmitClassList classlist = new SubmitClassList();
 		try {
 			scan = new Scanner(csv);
 			while (scan.hasNextLine()) {
-//				Person p = new Person();
 				line = scan.nextLine();
 				// last name
 				comma = line.indexOf(',');
@@ -113,8 +111,8 @@ public class ReadFile {
 				id = Integer.parseInt(line);
 				// print check
 				System.out.println(first + " " + last + " " + username+ " " + id);
-//				p.setUname(username);
-//				p.setId(id);
+
+				// Send to database
 				classlist.submitClass(username, classname);
 				
 			}
@@ -123,56 +121,53 @@ public class ReadFile {
 		}
 	}
 	
-//	public void dataHandler(Iterator<Row> rowIterator) {
-//		
-//		while (rowIterator.hasNext()) {
-//			Row row =rowIterator.next();
-//		
-//			Iterator<Cell> cellIterator = row.cellIterator();
-//			while (cellIterator.hasNext()) {
-//				Cell cell = cellIterator.next();
-//			
-//				switch (cell.getCellType()) {
-//					case Cell.CELL_TYPE_STRING:
-//						System.out.println(cell.getStringCellValue());
-//						break;
-//					case Cell.CELL_TYPE_NUMERIC:
-//						System.out.println(cell.getNumericCellValue());
-//						break;
-//				}
-//			}
-//		}	
-//	}
-	
-	//Isaac Weston's reader
+
 	public void dataHandler(Iterator<Row> rowIterator) {
 		int id;
+		int split;
+		String name, ruID, email;
 		String first, last, username;
 		SubmitClassList classlist = new SubmitClassList();
-		Row row =rowIterator.next();////////////////////////////////////////////////////
+		Row row;
+		for (int i = 0; i < 4; i++)// Loops 4 times because... Look, don't argue with me about this
+			row =rowIterator.next();
+		
 		while (rowIterator.hasNext()) {
-			row =rowIterator.next();///////////////////////////////////////////////////
+			row =rowIterator.next();
 			Iterator<Cell> cellIterator = row.cellIterator();
 			Cell cell = cellIterator.next();
-		//	Person p = new Person();
-			// last name
-			last = cell.getStringCellValue();
+		
+			// First and Last Name
+			name = cell.getStringCellValue();
+			split = name.indexOf(',');
+			last = name.substring(0,  split);
+			name = name.substring(split+2, name.length());
+			split = name.indexOf('.');
+			
+			// Special Condition no Middle Initial
+			if (split == -1)
+				first = name.substring(0, name.length());	
+			else{
+				split = name.indexOf(' ');
+				first = name.substring(0, split);
+			}
+			
+			//RU ID
 			cell = cellIterator.next();
-			// first name
-			first = cell.getStringCellValue();
+			ruID = cell.getStringCellValue();
+			
+			// Username
 			cell = cellIterator.next();
-			// user name
-			username = cell.getStringCellValue();
-			System.out.println(username);
-			cell = cellIterator.next();
-			// id
-			id = (int) cell.getNumericCellValue();
-			//cell = cellIterator.next();
+			email = cell.getStringCellValue();
+			split = email.indexOf('@');
+			username = email.substring(0,  split);
+			
 			// print check
-			System.out.println(first + " " + last + " " + username+ " " + id);
-//			p.setUname(username);
-//			p.setId(id);
-			classlist.submitClass(username, classname);
+			System.out.println(first + " " + last + " " + username+ " " + ruID+ " "+classname);
+
+			// Send to database
+			//classlist.submitClass(username, classname);
+			AddStudent student = new AddStudent(first, last, ruID, username, classname);
 		}	
 	}
 }

@@ -21,6 +21,7 @@ import javax.swing.*;
 
 import com.classassist.fastdesigns.gui.SelectClassScreen;
 import com.classassist.fastdesigns.logic.DesktopSignInActivity;
+import com.classassist.fastdesigns.logic.FrameSize;
 import com.classassist.fastdesigns.logic.NewMessage;
 
 import java.awt.Color;
@@ -194,6 +195,9 @@ public class StartScreen
 		passPanel.setOpaque(false);
 		acceptPanel.setOpaque(false);
 		frameSetting();
+		
+
+		new FrameSize(mainFrame);
 	}
 	
 	
@@ -225,7 +229,8 @@ public class StartScreen
 					clearAction();
 //					userField.setForeground(Color.red);
 //					userField.setText("Invalid Credentials");
-					new NewMessage("Invalid Credentials", mainFrame);
+					reloadStart();
+					new NewMessage("Invalid Credentials");
 				}
 			}
 		});
@@ -239,6 +244,14 @@ public class StartScreen
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.add(new PanelLoading(), BorderLayout.CENTER);
 		mainFrame.revalidate();
+	}
+	
+	private void reloadStart()
+	{
+		mainFrame.getContentPane().removeAll();
+		mainFrame.add(startPanel);
+		mainFrame.revalidate();
+		mainFrame.repaint();
 	}
 	
 	public void clearAction()
