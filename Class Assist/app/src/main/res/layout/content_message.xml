@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_height="match_parent">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This user is registered to a different device. Please let your teacher know if you need to change your device." />
+        android:id="@+id/message"
+        android:text="" />
 
     <Button
-        android:id="@+id/dismiss"
+        android:id="@+id/messagedismiss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dismiss"
