@@ -35,6 +35,7 @@ import com.classassist.fastdesigns.teacher.gui.CreateClassScreen;
 import com.classassist.fastdesigns.teacher.gui.DeleteClassScreen;
 import com.classassist.fastdesigns.teacher.gui.DeleteStudentScreen;
 import com.classassist.fastdesigns.teacher.gui.ExportAttendance;
+import com.classassist.fastdesigns.teacher.gui.ResetPasswordScreen;
 import com.classassist.fastdesigns.teacher.gui.StudentsLayout;
 
 /**
@@ -433,7 +434,7 @@ public class SelectClassScreen extends JPanel
 	
 	private void resetPasswordAction()
 	{
-		JPanel resetP = new ResetPasswordScreen(this);
+		JPanel resetP = new ResetPasswordScreen(this, user);
 		changeContent(resetP);
 	}
 	

@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import com.classassist.fastdesigns.gui.ChangeLook;
 import com.classassist.fastdesigns.gui.MyButton;
 import com.classassist.fastdesigns.gui.MyScrollBarUI;
 import com.classassist.fastdesigns.logic.GetAttendance;
@@ -85,6 +86,7 @@ public class ExportAttendance extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				new ChangeLook().fileChooserLook();
 				final JFileChooser fc = new JFileChooser();
 				JFrame mainFrame = new JFrame("Export");
 				String filename = null;
@@ -103,6 +105,7 @@ public class ExportAttendance extends JPanel
 				}
 				WriteFile write = new WriteFile(className, dateFormat.format(date), filename, searchDate);
 				write.print();
+				new ChangeLook().programLook();
 			}
 		});
 	}

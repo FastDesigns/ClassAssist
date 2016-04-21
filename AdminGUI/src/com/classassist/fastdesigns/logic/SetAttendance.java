@@ -6,19 +6,26 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SetAttendance {
 	public static boolean setAttendance (String[] args)
     {
         try
         {
+    		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    		Date date = new Date();
             String student = args[0];
+            GetStudentUsername get = new GetStudentUsername(student.split(" "));
+            String username = get.getUser();
         	String classname = args[1];
-            String date = args[2];
+            String d = dateFormat.format(date);
             String link = "https://php.radford.edu/~team05/studentattendance.php";
-            String data = URLEncoder.encode("student", "UTF-8") + "=" + URLEncoder.encode(student, "UTF-8");
+            String data = URLEncoder.encode("student", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(classname, "UTF-8");
-            data += "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(date, "UTF-8");
+            data += "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(d, "UTF-8");
            
             URL url = new URL(link);
             URLConnection conn = url.openConnection();
