@@ -17,11 +17,14 @@ public class SetAttendance {
         {
     		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     		Date date = new Date();
+            String d = dateFormat.format(date);
             String student = args[0];
             GetStudentUsername get = new GetStudentUsername(student.split(" "));
             String username = get.getUser();
+            if(get.getUser().equals(""))
+            	username = args[0];
+            
         	String classname = args[1];
-            String d = dateFormat.format(date);
             String link = "https://php.radford.edu/~team05/studentattendance.php";
             String data = URLEncoder.encode("student", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(classname, "UTF-8");

@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import com.classassist.fastdesigns.gui.MyButton;
 import com.classassist.fastdesigns.gui.SelectClassScreen;
 import com.classassist.fastdesigns.logic.TakeAttendance;
+import com.classassist.fastdesigns.logic.TakingAttendance;
 import com.classassist.fastdesigns.teacher.gui.AttendanceDisplay;
 /**
  * Layout and operations for exporting attendance
@@ -103,6 +104,7 @@ public class StudentsLayout extends JPanel
 	public void scanning()
 	{
 		scanPanel.setVisible(true);
+		new TakingAttendance(select.getUser(), select.getSelectedClass());
 	}
 	
 	public void notScanning()

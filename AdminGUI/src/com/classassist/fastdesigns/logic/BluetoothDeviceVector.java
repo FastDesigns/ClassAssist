@@ -6,7 +6,7 @@ public class BluetoothDeviceVector {
 	public static Vector<String> getMacVector(){
 //		ServicesSearch ss = new ServicesSearch();
 		Vector<String> finalVector = new Vector<String>();
-		for(int x=0;x<2;x++){
+		for(int x=0;x<1;x++){
 //			System.out.println("Starting device search");
 			Vector<String> tempVector = ServicesSearch.getMacs();
 //			System.out.println("Ending device search");

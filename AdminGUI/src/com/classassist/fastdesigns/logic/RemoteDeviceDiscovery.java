@@ -53,7 +53,7 @@ public class RemoteDeviceDiscovery {
             	}
             	catch(BluetoothStateException e)
             	{
-            		new NewMessage("Bluetooth is not turned on");
+//            		new NewMessage("Bluetooth is not turned on"); if you press take attendance while it is running, it will make a lot of messages
             	}
                 if (started) {
 //                    System.out.println("wait for device inquiry to complete...");

@@ -42,6 +42,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.classassist.fastdesigns.gui.MyScrollBarUI;
 import com.classassist.fastdesigns.gui.SelectClassScreen;
+import com.classassist.fastdesigns.logic.DoneAttendance;
 import com.classassist.fastdesigns.logic.GetAttendance;
 import com.classassist.fastdesigns.logic.UpdateStatus;
 
@@ -168,6 +169,7 @@ public class AttendanceDisplay extends JPanel
 	
 	private void cancelTimer()
 	{
+		new DoneAttendance(select.getUser(), select.getSelectedClass());
 		cancel = new Timer();
 		cancel.schedule(new TimerTask()
 		{
@@ -177,6 +179,7 @@ public class AttendanceDisplay extends JPanel
 				check.cancel();
 				select.notScanning();
 				check.purge();
+				new DoneAttendance(select.getUser(), select.getSelectedClass());
 			}
 		}, 300000);
 	}

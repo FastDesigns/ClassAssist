@@ -449,9 +449,22 @@ public class SelectClassScreen extends JPanel
 		changeContent(resetP);
 	}
 	
+	/**
+	 * Gets class selected in dropdown box at top
+	 * @return String
+	 */
 	public String getSelectedClass()
 	{
 		return classCombo.getSelectedItem().toString();
+	}
+	
+	/**
+	 * Returns logged in user
+	 * @return String
+	 */
+	public String getUser()
+	{
+		return this.user;
 	}
 	
 	private void teacherComboListener()
