@@ -1,6 +1,5 @@
 package com.example.danielle.classassist;
 
-import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +7,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StudentMenu extends AppCompatActivity implements View.OnClickListener
 {
@@ -17,6 +19,8 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     private boolean blueCompat = true; //bluetooth compatible, checked later
     private boolean blueEnabled = false; //off by default, used to identify if bluetooth is on
     private BluetoothAdapter bTooth;
+    private Timer timer = new Timer();
+    private boolean broadcasting = false;
 
     final Handler macHandler = new Handler();
 
@@ -34,6 +38,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     private void setupButtons()
     {
         btnAttendance = (Button) findViewById(R.id.btnAttendance);
+        btnAttendance.setEnabled(false);
         //btnQuizzes = (Button) findViewById(R.id.btnQuizzes);
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
@@ -86,9 +91,29 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         checkBluetoothComp();
         if(blueCompat)
         {
-            //start bluetooth
-            broadcast();
+            startTimer();
         }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if(blueCompat)
+            startTimer();
+    }
+
+    private void startTimer()
+    {
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                new CheckAttendance(StudentMenu.this).execute(SelectedClass.getSelectedClass());
+            }
+        }, 20, 3);
     }
 
     //lets users know their device does not support bluetooth
@@ -98,18 +123,31 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         {
             //Device does not support Bluetooth.
             blueCompat = false;
-            new NewMessage("This device does not support bluetooth,", getBaseContext());
+            new NewMessage("This device does not support bluetooth.", getBaseContext());
         }
     }
 
-    //makes the phone discoverable to other devices
-    private void broadcast()
+    /**
+     * Makes your device discoverable to other bluetooth devices if device is bluetooth compatible
+     */
+    public void broadcast()
     {
+        broadcasting = true;
+
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         //next line of code will set the duration of discovery to 300 SECONDS. Default is 2 minutes
 //        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
         startActivity(discoverableIntent);
         getMacAddress();
+    }
+
+    /**
+     * Device is no longer allowed to submit attendance (teacher is no longer taking attendance)
+     */
+    public void notBroadcasting()
+    {
+        if(broadcasting)
+            bluetoothOff();
     }
 
     //retrieves mac address from database
@@ -132,12 +170,10 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
                 if (result.equals(""))
                 {
                     addNewMac();
-                } else if (!result.equals(normalizeMac(bTooth.getAddress())))
+                }
+                else if (!result.equals(normalizeMac(bTooth.getAddress())))
                 {
                     new NewMessage("Device is already registered to another student. Please see the teacher.", getBaseContext());
-                } else
-                {
-                    submitAttendance();
                 }
             }
         });
@@ -159,12 +195,6 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     private void addNewMac()
     {
         new AddMacAddress(this).execute(bTooth.getAddress());
-        submitAttendance();
-    }
-
-    private void submitAttendance()
-    {
-        new SubmitAttendance(this.getBaseContext(), this).execute();
     }
 
     /**
@@ -177,6 +207,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
 
     public void bluetoothOff()
     {
-        bTooth.disable();
+        if(blueEnabled)
+            bTooth.disable();
     }
 }

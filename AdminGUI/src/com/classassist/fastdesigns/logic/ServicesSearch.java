@@ -93,6 +93,7 @@ public class ServicesSearch {
                 
                 try {
                     /* Add bluetooth device name and address in list */
+                	System.out.println(btDevice.getFriendlyName(false)); //prints out name of detected devices
                     listDeviceDetails.add(btDevice.getFriendlyName(false));
                     listDeviceDetails.add(btDevice.getBluetoothAddress());
                 } catch (Exception e) {

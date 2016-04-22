@@ -6,44 +6,35 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class DeleteAttendance extends Thread
+public class TakingAttendance extends Thread
 {
 	private String user, cl;
-	public DeleteAttendance(String[] args)
+	
+	public TakingAttendance(String u, String c)
 	{
-		this.user = args[0];
-		this.cl = args[1];
-		start();
+		this.user = u;
+		this.cl = c;
+		this.start();
 	}
 	
 	public void run()
 	{
 		try
 		{
-    		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    		Date date = new Date();
-            String d = dateFormat.format(date);
-            String student = user;
-            GetStudentUsername get = new GetStudentUsername(student.split(" "));
-            String username = get.getUser();
-			String link = "https://php.radford.edu/~team05/deleteattendance.php";
-	        String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+			String link = "https://php.radford.edu/~team05/takingattendance.php";
+	        String data = URLEncoder.encode("user", "UTF-8") + "=" + URLEncoder.encode(user, "UTF-8");
 	        data += "&" + URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(cl, "UTF-8");
-	        data += "&" + URLEncoder.encode("date", "UTF-8") + "=" + URLEncoder.encode(d, "UTF-8");
-	
+	        
 	        URL url = new URL(link);
 	        URLConnection conn = url.openConnection();
-	
+	        
 	        conn.setDoOutput(true);
 	        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-	
+	        
 	        wr.write(data);
 	        wr.flush();
-	
+	        
 	        BufferedReader reader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 	        
 	        String line = reader.readLine();
@@ -51,12 +42,12 @@ public class DeleteAttendance extends Thread
 	        //read server response
 	        if(line != null)
 	        {
-	        	new NewMessage(line);
+	            new NewMessage(line);
 	        }
 	    }
 	    catch(Exception e)
 	    {
-	    	e.printStackTrace();
+	        e.printStackTrace();
 	    }
 	}
 }
