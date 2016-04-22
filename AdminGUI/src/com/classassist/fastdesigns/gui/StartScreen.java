@@ -235,7 +235,7 @@ public class StartScreen
 			}
 		});
 		loading();
-		thread.start();
+//		thread.start();
 	}
 	
 	private void loading()

@@ -1,9 +1,7 @@
-package com.classassist.fastdesigns.teacher.gui;
+package com.classassist.fastdesigns.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -25,24 +23,21 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.classassist.fastdesigns.gui.MyButton;
 import com.classassist.fastdesigns.gui.MyScrollBarUI;
 import com.classassist.fastdesigns.gui.SelectClassScreen;
-import com.classassist.fastdesigns.logic.AddStudent;
-import com.classassist.fastdesigns.logic.DeleteStudent;
+import com.classassist.fastdesigns.logic.DeleteTeacher;
 import com.classassist.fastdesigns.logic.FrameSize;
-import com.classassist.fastdesigns.logic.GetAttendance;
 import com.classassist.fastdesigns.logic.ItemListRenderer;
 
 /**
- * Delete students GUI
+ * Delete teachers GUI
  * @author djust
  *
  */
-public class DeleteStudentScreen extends JPanel
+public class DeleteTeacherScreen extends JPanel
 {
 	/**
 	 * Delete Student GUI version 1
@@ -56,11 +51,11 @@ public class DeleteStudentScreen extends JPanel
 	//main panel
 	private JPanel main = new JPanel();
 	
-	//content list of students
-	private JList<String> students = new JList<String>(new String[]{"Loading..."});
-	private JScrollPane studentsScroll = new JScrollPane(students);
+	//content list of teachers
+	private JList<String> teachers = new JList<String>(new String[]{"Loading..."});
+	private JScrollPane teachersScroll = new JScrollPane(teachers);
 	
-	public DeleteStudentScreen(SelectClassScreen s)
+	public DeleteTeacherScreen(SelectClassScreen s)
 	{
 		this.select = s;
 		this.setLayout(new BorderLayout());
@@ -80,11 +75,11 @@ public class DeleteStudentScreen extends JPanel
 		this.setBorder(new EmptyBorder(20, 20, 20, 20));
 		main.setBackground(Color.darkGray);
 		main.setLayout(new BorderLayout());
-		main.add(studentsScroll, BorderLayout.CENTER);
+		main.add(teachersScroll, BorderLayout.CENTER);
 		this.setBackground(Color.darkGray);
-		students.setCellRenderer(new ItemListRenderer(true));
-		studentsScroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
-		students.setBorder(BorderFactory.createLineBorder(Color.black));
+		teachers.setCellRenderer(new ItemListRenderer(true));
+		teachersScroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
+		teachers.setBorder(BorderFactory.createLineBorder(Color.black));
 		adapter = new MouseAdapter()
 		{
 			Point p;
@@ -92,19 +87,19 @@ public class DeleteStudentScreen extends JPanel
 			public void mouseMoved(MouseEvent e)
 			{
 				p = new Point(e.getX(), e.getY());
-				index = students.locationToIndex(p);
-				students.setSelectedIndex(index);
+				index = teachers.locationToIndex(p);
+				teachers.setSelectedIndex(index);
 			}
 			
 			public void mouseReleased(MouseEvent e)
 			{
-				students.removeMouseListener(adapter);
-				students.removeMouseMotionListener(adapter);
-				confirm(students.getSelectedValue());
+				teachers.removeMouseListener(adapter);
+				teachers.removeMouseMotionListener(adapter);
+				confirm(teachers.getSelectedValue());
 			}
 		};
-		students.addMouseMotionListener(adapter);
-		students.addMouseListener(adapter);
+		teachers.addMouseMotionListener(adapter);
+		teachers.addMouseListener(adapter);
 		createList();
 	}
 	
@@ -124,7 +119,7 @@ public class DeleteStudentScreen extends JPanel
 		lPane.setBackground(Color.darkGray);
 		lPane2.setBackground(Color.darkGray);
 		
-		JLabel label = new JLabel("Are you sure you want to delete:");
+		JLabel label = new JLabel("Deleting a teacher will also delete all associated classes. Are you sure you want to delete:");
 		JLabel label2 = new JLabel(s);
 		label.setForeground(Color.white);
 		label2.setForeground(Color.white);
@@ -158,11 +153,28 @@ public class DeleteStudentScreen extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				students.addMouseMotionListener(adapter);
-				students.addMouseListener(adapter);
-				deleteStudent(stude);
+				teachers.addMouseMotionListener(adapter);
+				teachers.addMouseListener(adapter);
+				deleteTeacher(stude);
 				closeFrame();
 				createList();
+				Thread thread = new Thread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						try
+						{
+							Thread.sleep(3000);
+							select.removeTeacher(stude);
+						}
+						catch(InterruptedException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				});
+				thread.start();
 			}
 		});
 		
@@ -171,16 +183,16 @@ public class DeleteStudentScreen extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				students.addMouseMotionListener(adapter);
-				students.addMouseListener(adapter);
+				teachers.addMouseMotionListener(adapter);
+				teachers.addMouseListener(adapter);
 				closeFrame();
 			}
 		});
 	}
 	
-	private void deleteStudent(String s)
+	private void deleteTeacher(String s)
 	{
-		new DeleteStudent(s, select.getSelectedClass());
+		new DeleteTeacher(s);
 	}
 	
 	private void closeFrame()
@@ -196,22 +208,21 @@ public class DeleteStudentScreen extends JPanel
 	
 	private void createList()
 	{
-		new GetClasses();
+		new GetTeachers();
 	}
 	
-	public void makeStudents(String[] l)
+	public void makeTeachers(String[] l)
 	{
-		students.setListData(l);
+		teachers.setListData(l);
 		refresh();
 	}
 	
-	public class GetClasses extends Thread
+	public class GetTeachers extends Thread
 	{
-		private String clas;
+		private String[] list;
 		
-		public GetClasses()
+		public GetTeachers()
 		{
-			clas = select.getSelectedClass();
 			this.start();
 		}
 		
@@ -219,13 +230,12 @@ public class DeleteStudentScreen extends JPanel
 		{
 			try
 			{
-				String[] students;
-				String link = "https://php.radford.edu/~team05/getclassstudents.php";
-		        String data = URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(clas, "UTF-8");
-		        
+				String link = "https://php.radford.edu/~team05/teacherlist.php";
+		        String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode("admin", "UTF-8");
+		
 		        URL url = new URL(link);
 		        URLConnection conn = url.openConnection();
-		        
+		
 		        conn.setDoOutput(true);
 		        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 		
@@ -241,14 +251,14 @@ public class DeleteStudentScreen extends JPanel
 		        if((line = reader.readLine()) != null)
 		        {
 		            sb.append(line);
-		            students = sb.toString().split("&");
+		            list = sb.toString().split("&");
 		        }
 		        else
 		        {
-		        	students = new String[] {"No Students Found"};
+		        	String[] result = {"No Teachers Found"};
+		        	list = result;
 		        }
-		        
-		        setStudents(students);
+		        makeTeachers(list);
 		        this.interrupt();
 		    }
 		    catch(Exception e)
@@ -256,11 +266,6 @@ public class DeleteStudentScreen extends JPanel
 		        e.printStackTrace();
 		        this.interrupt();
 		    }
-		}
-		
-		private void setStudents(String[] l)
-		{
-			makeStudents(l);
 		}
 	}
 	
