@@ -63,7 +63,7 @@ public class NewMessage extends JPanel
 		g.drawString(mess, x, y);
 		
 		//border
-		g.drawRect(0, 0, 299, 99); //must subtract 1 from width and height to be able to see right side
+		g.drawRect(0, 0, 299, 99); //must subtract 1 from width and height to be able to see right and bottom sides
 		
 		g.dispose();
 	}

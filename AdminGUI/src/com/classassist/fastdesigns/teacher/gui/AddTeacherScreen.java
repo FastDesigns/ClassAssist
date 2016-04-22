@@ -15,14 +15,16 @@ import javax.swing.JTextField;
 
 import com.classassist.fastdesigns.gui.MyButton;
 import com.classassist.fastdesigns.gui.SelectClassScreen;
-import com.classassist.fastdesigns.logic.AddStudent;
+import com.classassist.fastdesigns.logic.AddTeacher;
+import com.classassist.fastdesigns.logic.CreateClass;
+import com.classassist.fastdesigns.logic.NewMessage;
 
 /**
  * Add students GUI
  * @author djust
  *
  */
-public class AddStudentScreen extends JPanel
+public class AddTeacherScreen extends JPanel
 {
 	/**
 	 * Create Student GUI version 1
@@ -38,25 +40,25 @@ public class AddStudentScreen extends JPanel
 	private JPanel fieldsPanel = new JPanel();
 	
 	//Student First Name
-	private JPanel sFNamePanel = new JPanel();
-	private JLabel sFName = new JLabel("Student First Name: ");
-	private JTextField sFNameText = new JTextField(20);
+	private JPanel tFNamePanel = new JPanel();
+	private JLabel tFName = new JLabel("Teacher First Name: ");
+	private JTextField tFNameText = new JTextField(20);
 	
 	//Student Last Name
-	private JPanel sLNamePanel = new JPanel();
-	private JLabel sLName = new JLabel("Student Last Name: ");
-	private JTextField sLNameText = new JTextField(20);
+	private JPanel tLNamePanel = new JPanel();
+	private JLabel tLName = new JLabel("Teacher Last Name: ");
+	private JTextField tLNameText = new JTextField(20);
 	
 	//Username
 	private JPanel uNamePanel = new JPanel();
-	private JLabel uName = new JLabel("Student Username: ");
+	private JLabel uName = new JLabel("Teacher Username: ");
 	private JTextField uNameText = new JTextField(20);
 	
 	//submit button fields
 	private JPanel submitButtonPanel = new JPanel();
 	private JButton submitButton = new MyButton("Submit");
 	
-	public AddStudentScreen(SelectClassScreen s)
+	public AddTeacherScreen(SelectClassScreen s)
 	{
 		this.select = s;
 		this.setLayout(new BorderLayout());
@@ -74,7 +76,31 @@ public class AddStudentScreen extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				new AddStudent(sFNameText.getText(), sLNameText.getText(), uNameText.getText(), select.getSelectedClass());
+				if(tFNameText.getText().split(" ").length > 1 || tLNameText.getText().split(" ").length > 1)
+				{
+					new NewMessage("Cannot have spaces in names");
+				}
+				else
+				{
+					new AddTeacher(tFNameText.getText(), tLNameText.getText(), uNameText.getText(), AddTeacherScreen.this);
+					Thread thread = new Thread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							try
+							{
+								Thread.sleep(3000);
+								select.makeTeachers();
+							}
+							catch(InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+						}
+					});
+					thread.start();
+				}
 			}
 		});
 	}
@@ -88,13 +114,13 @@ public class AddStudentScreen extends JPanel
 		main.add(fieldsPanel);
 		fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.PAGE_AXIS));
 		//first name panel
-		fieldsPanel.add(sFNamePanel);
-		sFNamePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		sFNamePanel.setBackground(Color.darkGray);
+		fieldsPanel.add(tFNamePanel);
+		tFNamePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		tFNamePanel.setBackground(Color.darkGray);
 		//last name panel
-		fieldsPanel.add(sLNamePanel);
-		sLNamePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		sLNamePanel.setBackground(Color.darkGray);
+		fieldsPanel.add(tLNamePanel);
+		tLNamePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		tLNamePanel.setBackground(Color.darkGray);
 		//username panel
 		fieldsPanel.add(uNamePanel);
 		uNamePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -107,13 +133,13 @@ public class AddStudentScreen extends JPanel
 	private void addFields()
 	{
 		//first name fields
-		sFNamePanel.add(sFName);
-		sFName.setForeground(Color.white);
-		sFNamePanel.add(sFNameText);
+		tFNamePanel.add(tFName);
+		tFName.setForeground(Color.white);
+		tFNamePanel.add(tFNameText);
 		//last name fields
-		sLNamePanel.add(sLName);
-		sLName.setForeground(Color.white);
-		sLNamePanel.add(sLNameText);
+		tLNamePanel.add(tLName);
+		tLName.setForeground(Color.white);
+		tLNamePanel.add(tLNameText);
 		//username fields
 		uNamePanel.add(uName);
 		uName.setForeground(Color.white);

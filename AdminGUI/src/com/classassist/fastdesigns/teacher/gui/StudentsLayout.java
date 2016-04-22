@@ -44,12 +44,14 @@ public class StudentsLayout extends JPanel
 	private JPanel attendance;
 	private AttendanceDisplay at;
 	private SelectClassScreen select;
+	private boolean admin = false;
 	
-	public StudentsLayout(String[] s, AttendanceDisplay a, SelectClassScreen sel)
+	public StudentsLayout(String[] s, AttendanceDisplay a, SelectClassScreen sel, boolean b)
 	{
 		this.select = sel;
 		attendance = a;
 		at = a;
+		admin = b;
 		setLayout(new BorderLayout());
 		setup();
 		add(contentPanel, BorderLayout.CENTER);
@@ -66,6 +68,11 @@ public class StudentsLayout extends JPanel
 		top.add(actionsPanel);
 		top.setBorder(new EmptyBorder(0, 0, 0, 0));
 		actionsPanel.add(attend);
+		if(admin)
+		{
+			attend.setEnabled(false);
+			attend.setVisible(false);
+		}
 		actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
 		actionsPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		scanGif();
