@@ -167,7 +167,7 @@ public class ReadFile {
 
 			// Send to database
 			//classlist.submitClass(username, classname);
-			AddStudent student = new AddStudent(first, last, ruID, username, classname);
+			AddStudent student = new AddStudent(first, last, username, classname);
 		}	
 	}
 }

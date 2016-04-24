@@ -433,6 +433,8 @@ public class SelectClassScreen extends JPanel
 		fc.setFileFilter(filter);
 		filter = new FileNameExtensionFilter("xlsx", "xlsx");
 		fc.addChoosableFileFilter(filter);
+		filter = new FileNameExtensionFilter("csv", "csv");
+		fc.addChoosableFileFilter(filter);
 		
 		int result = fc.showOpenDialog(pop);
 		

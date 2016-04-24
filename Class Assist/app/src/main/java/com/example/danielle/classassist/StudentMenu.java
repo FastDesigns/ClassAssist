@@ -30,6 +30,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_studentmenu);
         setupButtons();
+        startTimer();
     }
 
     /**
@@ -91,7 +92,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         checkBluetoothComp();
         if(blueCompat)
         {
-            startTimer();
+            broadcast();
         }
     }
 
@@ -102,6 +103,15 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
 
         if(blueCompat)
             startTimer();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        timer.cancel();
+        timer.purge();
     }
 
     private void startTimer()
@@ -148,6 +158,15 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     {
         if(broadcasting)
             bluetoothOff();
+        btnAttendance.setEnabled(false);
+    }
+
+    /**
+     * enables attendance button, allowing student to submit attendance
+     */
+    public void enableButton()
+    {
+        btnAttendance.setEnabled(true);
     }
 
     //retrieves mac address from database
