@@ -99,6 +99,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onResume()
     {
+        System.out.println("CALLED RESUME SDFHSDFHDSJHFJKSDHFJKSHFDKJSHF");
         super.onResume();
 
         if(blueCompat)
@@ -108,6 +109,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onPause()
     {
+        System.out.println("CALLED PAUSE SDFHSDFHDSJHFJKSDHFJKSHFDKJSHF");
         super.onPause();
 
         timer.cancel();
@@ -116,6 +118,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
 
     private void startTimer()
     {
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask()
         {
             @Override
