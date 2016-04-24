@@ -62,7 +62,7 @@ public class CheckAttendance extends AsyncTask<String, Void, String>
         }
         else
         {
-            student.broadcast();
+            student.enableButton();
         }
     }
 }
