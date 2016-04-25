@@ -22,10 +22,9 @@ public class TakeAttendance
 					String[] attendance = {"",className,date};
 					attendance[0]=GetUserFromMac.getUser(testVector.elementAt(x));
 					SetAttendance.setAttendance(attendance);
-					System.out.println("Submitted attendance");
 				}
 			}
-		}, 20, 3);
+		}, 20, 15000);
 		
 		cancel.schedule(new TimerTask()
 		{

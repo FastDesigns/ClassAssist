@@ -1,11 +1,15 @@
 package com.example.danielle.classassist;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 
 public class SVCourses extends AppCompatActivity implements View.OnClickListener{
     //declaring variables
@@ -27,6 +31,7 @@ public class SVCourses extends AppCompatActivity implements View.OnClickListener
             case R.id.btnLogout:
                 startActivity(new Intent(SVCourses.this, Login.class));
                 User.resetUser();
+                SelectedClass.resetClass();
         }
     }
 
@@ -51,7 +56,12 @@ public class SVCourses extends AppCompatActivity implements View.OnClickListener
             Button myButton = new Button(this);
             myButton.setText(s[i]);
             myButton.setId(i);
+            myButton.setBackgroundColor(Color.rgb(47, 196, 205));
             final int id = myButton.getId();
+            View v = new View(this);
+            v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 45));
+            v.setBackgroundColor(Color.rgb(65, 65, 65));
+            ll.addView(v);
             ll.addView(myButton, lp);
             myButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v)

@@ -43,7 +43,8 @@
         android:id="@+id/btnLogin"
         android:layout_gravity="center_horizontal"
         android:textColor="#404040"
-        android:background="#2fc4cd"/>
+        android:background="#2fc4cd"
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="match_parent"
