@@ -87,6 +87,7 @@ public class SelectClassScreen extends JPanel
 	private boolean admin = false;
 	private ActionListener teacherL;
 	private ActionListener classL;
+	private String[] studentList;
 	
 	/**
 	 * Creates the admin GUI
@@ -414,6 +415,7 @@ public class SelectClassScreen extends JPanel
 		AttendanceDisplay ad = new AttendanceDisplay(s, this);
 		stud = new StudentsLayout(s, ad, this, admin);
 		changeContent(stud);
+		studentList = s;
 	}
 	
 	public void notScanning()
@@ -456,7 +458,7 @@ public class SelectClassScreen extends JPanel
 	private void exportAction()
 	{
 		String className = (String) classCombo.getSelectedItem();
-		JPanel f = new ExportAttendance(className);
+		JPanel f = new ExportAttendance(className, studentList);
 		changeContent(f);
 	}
 	
