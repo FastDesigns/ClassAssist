@@ -11,7 +11,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,9 +20,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-
 import org.jdesktop.swingx.JXDatePicker;
-
 import com.classassist.fastdesigns.gui.ChangeLook;
 import com.classassist.fastdesigns.gui.MyButton;
 import com.classassist.fastdesigns.gui.MyScrollBarUI;
@@ -52,8 +49,9 @@ public class ExportAttendance extends JPanel
 	private JList<String> attendance = new JList<String>(attendanceList);
 	private JScrollPane attendancePane = new JScrollPane(attendance);
 	private final JXDatePicker picker = new JXDatePicker();
+	private String[] students;
 	
-	public ExportAttendance(String cl)
+	public ExportAttendance(String cl, String[] studentList)
 	{
 		className = cl;
 		setLayout(new BorderLayout());
@@ -62,6 +60,7 @@ public class ExportAttendance extends JPanel
 		add(contentPanel, BorderLayout.CENTER);
 		setPreferredSize(new Dimension(500, 800));
 		setVisible(true);
+		students = studentList;
 	}
 	
 	private void setup()
@@ -103,7 +102,7 @@ public class ExportAttendance extends JPanel
 				    filename = fileToSave.getAbsolutePath();
 				    //System.out.println("Save as file: " + fileToSave.getAbsolutePath());
 				}
-				WriteFile write = new WriteFile(className, dateFormat.format(date), filename, searchDate);
+				WriteFile write = new WriteFile(className, dateFormat.format(date), filename, searchDate, students);
 				write.print();
 				new ChangeLook().programLook();
 			}

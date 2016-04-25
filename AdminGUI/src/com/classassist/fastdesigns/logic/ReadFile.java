@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -169,7 +168,7 @@ public class ReadFile {
 				System.out.println(first + " " + last + " " + username);
 
 				// Send to database
-				//AddStudent student = new AddStudent(first, last, username, classname);
+				AddStudent student = new AddStudent(first, last, username, classname);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -241,7 +240,7 @@ public class ReadFile {
 			System.out.println(first + " " + last + " " + username);
 
 			// Send to database
-			//AddStudent student = new AddStudent(first, last, username, classname);
+			AddStudent student = new AddStudent(first, last, username, classname);
 		}	
 	}
 }
