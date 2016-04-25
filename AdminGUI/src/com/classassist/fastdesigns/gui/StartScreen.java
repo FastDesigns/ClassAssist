@@ -39,6 +39,11 @@ import java.awt.image.ColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
+/**
+ * The initial login screen of the program.
+ * @author Fast Designs
+ * @version 1.0
+ */
 public class StartScreen
 {
 	// Buttons
@@ -64,7 +69,10 @@ public class StartScreen
 	private Image img; //background
 	private boolean missingBackground = false; //becomes true if img cannot be found
 	
-	
+	/**
+	 * Sets the panel with its initial values.
+	 * @param main The JFrame that holds this panel
+	 */
 	public StartScreen(JFrame main)
 	{
 		loadBackground("background.png");
@@ -107,12 +115,18 @@ public class StartScreen
 		}
 	}
 	
+	/**
+	 * Sets the parent JFrame's title and close behavior.
+	 */
 	public void createWindow()
 	{
 		mainFrame.setTitle("Class Assist");	
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Creates the buttons for the panel and sets their ActionListeners.
+	 */
 	public void makeButtons()
 	{
 		loginBtn = new MyButton("Login");
@@ -134,7 +148,9 @@ public class StartScreen
 		
 	}
 	
-	
+	/**
+	 * Creates the text feilds for the panel and sets their ActionListeners.
+	 */
 	public void makeFields()
 	{
 		userField = new JTextField();
@@ -154,6 +170,9 @@ public class StartScreen
 		passField.addActionListener(submit);
 	}
 	
+	/**
+	 * Creates the text labels for the panel.
+	 */
 	public void makeLabels()
 	{
 		userLabel = new JLabel("Username: ");
@@ -164,6 +183,9 @@ public class StartScreen
 		passLabel.setForeground(Color.white);
 	}
 	
+	/**
+	 * Defines the layouts for all of the various panels of the GUI.
+	 */
 	public void guiBuilder()
 	{
 		startPanel.setLayout(new GridBagLayout());
@@ -200,7 +222,10 @@ public class StartScreen
 		new FrameSize(mainFrame);
 	}
 	
-	
+	/**
+	 * Quries the database and determines if the input credentials match a particular
+	 * user; if so, log them in, else, display an error message,
+	 */
 	public void loginAction()
 	{
 		final String userName = userField.getText();
@@ -254,6 +279,9 @@ public class StartScreen
 		mainFrame.repaint();
 	}
 	
+	/**
+	 * Clears the text in the text fields.
+	 */
 	public void clearAction()
 	{
 		userField.setText("");
@@ -262,6 +290,9 @@ public class StartScreen
 		userField.requestFocusInWindow();
 	}
 	
+	/**
+	 * Sets the settings for the parent JFrame.
+	 */
 	public void frameSetting()
 	{
 		mainFrame.pack();
@@ -269,6 +300,9 @@ public class StartScreen
 		mainFrame.setVisible(true);
 	}
 	
+	/**
+	 * Loads the administrator view.
+	 */
 	public void loadAdmin()
 	{
 		SelectClassScreen classes = new SelectClassScreen(mainFrame);
@@ -277,6 +311,10 @@ public class StartScreen
 		frameSetting();
 	}
 	
+	/**
+	 * Loads the teacher view.
+	 * @param userName The username of the currently logged in user
+	 */
 	public void loadTeacher(String userName)
 	{
 		SelectClassScreen classes = new SelectClassScreen(mainFrame, userName);
