@@ -8,6 +8,11 @@ import javax.swing.SwingUtilities;
 
 import com.classassist.fastdesigns.gui.StartScreen;
 
+/**
+ * The button that logs the user out of the system.
+ * @author Fast Designs
+ * @version 1.0
+ */
 public class LogoutButton extends JButton implements ActionListener
 {
 
@@ -17,6 +22,10 @@ public class LogoutButton extends JButton implements ActionListener
 	private static final long serialVersionUID = 1L;
 	//private JFrame main;
 	
+	/**
+	 * Sets up the button with text and an action listener.
+	 * @param text The button text
+	 */
 	public LogoutButton(String text)
 	{
 		super(text);
@@ -25,6 +34,9 @@ public class LogoutButton extends JButton implements ActionListener
 	}
 
 	@Override
+	/**
+	 * ActionListener that returns the program to the StartScreen.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
