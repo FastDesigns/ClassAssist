@@ -44,7 +44,8 @@ import com.classassist.fastdesigns.teacher.gui.StudentsLayout;
 
 /**
  * Main Teacher display
- *
+ * @author Fast Designs
+ * @version 1.0
  */
 public class SelectClassScreen extends JPanel
 {
@@ -302,6 +303,10 @@ public class SelectClassScreen extends JPanel
 		new GetUsername(this, teacherCombo.getSelectedItem().toString().split(" "));
 	}
 	
+	/**
+	 * Sets the username
+	 * @param u
+	 */
 	public void setUsername(String u)
 	{
 		this.user = u;
@@ -418,6 +423,9 @@ public class SelectClassScreen extends JPanel
 		studentList = s;
 	}
 	
+	/**
+	 * Indicates that the student should no longer be scanning.
+	 */
 	public void notScanning()
 	{
 		stud.notScanning();
