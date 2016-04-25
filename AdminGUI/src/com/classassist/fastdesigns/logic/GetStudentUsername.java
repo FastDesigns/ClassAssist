@@ -7,10 +7,20 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * Retrieves username for a student from the database
+ * @author Alex Morris
+ *
+ */
 public class GetStudentUsername
 {
 	private String first, last, username;
 	
+	
+	/**
+	 * Parses the students name into a first and last name
+	 * @param t First and Last name seperated by a space
+	 */
 	public GetStudentUsername(String[] t)
 	{
 		if(t.length==2){
@@ -19,6 +29,10 @@ public class GetStudentUsername
 		}
 	}
 	
+	/**
+	 * Queries the database for the given students username
+	 * @return Students username
+	 */
 	public String getUser()
 	{
 		try

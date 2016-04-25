@@ -7,16 +7,28 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * Resets a users password
+ * @author Eddie Justice
+ *
+ */
 public class ResetPassword extends Thread
 {
 	private String user;
 	
+	/**
+	 * Resets the given users password
+	 * @param u Username
+	 */
 	public ResetPassword(String u)
 	{
 		this.user = u;
 		this.start();
 	}
 	
+	/**
+	 * Run method
+	 */
 	public void run()
 	{
 		try
@@ -55,11 +67,18 @@ public class ResetPassword extends Thread
 	    }
 	}
 	
+	/**
+	 * Provides a message that the password reset has failed
+	 * @param msg Failure message
+	 */
 	private void failure(String msg)
 	{
 		new NewMessage(msg);
 	}
 	
+	/**
+	 * Provides a message that the password reset was sucessful
+	 */
 	private void success()
 	{
 		new NewMessage("Reset Password Successfully");

@@ -7,10 +7,23 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * ChangePassword.java is used to change passwords and store new password in the
+ * database using the php file on the server.
+ * @author Eddie Justice
+ *
+ */
 public class ChangePassword extends Thread
 {
 	private String user, oldPass, newPass;
 	
+	/**
+	 * ChangePassword() constructs the necessary variables to process changing a 
+	 * password
+	 * @param u String username
+	 * @param o String old password
+	 * @param n String new password
+	 */
 	public ChangePassword(String u, String o, String n)
 	{
 		this.user = u;
@@ -19,6 +32,9 @@ public class ChangePassword extends Thread
 		this.start();
 	}
 	
+	/**
+	 * run() establishes a connection to the database and stores the new password.
+	 */
 	public void run()
 	{
 		try

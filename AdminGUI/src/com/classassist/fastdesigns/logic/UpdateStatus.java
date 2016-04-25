@@ -12,11 +12,22 @@ import java.util.Date;
 
 import com.classassist.fastdesigns.teacher.gui.StatusIndicator;
 
+/**
+ * Retrieves the attendance for a class
+ * 
+ * @author Eddie Justice
+ */
 public class UpdateStatus
 {
 	private String name, cl;
 	private StatusIndicator status;
 	
+	/**
+	 * Constructor
+	 * @param n Student Name
+	 * @param s Status indicator 
+	 * @param c Class
+	 */
 	public UpdateStatus(String n, StatusIndicator s, String c)
 	{
 		this.name = n;
@@ -25,6 +36,9 @@ public class UpdateStatus
 		this.start();
 	}
 	
+	/**
+	 * Updates the status indicators
+	 */
 	public void start()
 	{
 		try

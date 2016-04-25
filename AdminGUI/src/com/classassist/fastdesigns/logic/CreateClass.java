@@ -7,10 +7,21 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * CreateClass.java is used to create a new class and record it in the database
+ * @author Eddie Justice
+ *
+ */
 public class CreateClass extends Thread
 {
 	private String user, className;
 	
+	/**
+	 * CreateClass() constructs the necessary variables to create a new class 
+	 * in the database.
+	 * @param u String user name
+	 * @param c String class name
+	 */
 	public CreateClass(String u, String c)
 	{
 		this.user = u;
@@ -18,6 +29,10 @@ public class CreateClass extends Thread
 		this.start();
 	}
 	
+	/**
+	 * run() establishes a connection to the database, and handles adding a
+	 * class.
+	 */
 	public void run()
 	{
 		if(className.equals(""))

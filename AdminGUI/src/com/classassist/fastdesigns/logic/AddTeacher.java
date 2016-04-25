@@ -9,11 +9,24 @@ import java.net.URLEncoder;
 
 import com.classassist.fastdesigns.teacher.gui.AddTeacherScreen;
 
+/**
+ * AddTeacher.java is used to add teachers to the database using php file on server
+ * @author Eddie Justice
+ *
+ */
 public class AddTeacher extends Thread
 {
 	private String first, last, user;
 	private AddTeacherScreen add;
 	
+	/**
+	 * AddTeacher() constructs the necessary variables to process and upload the 
+	 * teacher to the database.
+	 * @param f String for first name
+	 * @param l String for last name
+	 * @param u String for username
+	 * @param a AddTeacherScreen to display the GUI for adding teachers
+	 */
 	public AddTeacher(String f, String l, String u, AddTeacherScreen a)
 	{
 		this.first = f;
@@ -23,6 +36,10 @@ public class AddTeacher extends Thread
 		this.start();
 	}
 	
+	/**
+	 * run() is used to establish a connection to the database and upload the 
+	 * teacher.
+	 */
 	public void run()
 	{
 		if(first.equals("") || last.equals("") || user.equals(""))

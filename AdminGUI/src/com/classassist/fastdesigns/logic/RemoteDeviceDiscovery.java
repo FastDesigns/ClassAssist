@@ -10,8 +10,18 @@ import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
 
+/**
+ * Finds Bluetooth devices
+ * 
+ * @author BlueCove (Edited by Fast Designs)
+ *
+ */
 public class RemoteDeviceDiscovery {
 
+	/**
+	 * Gets nearby Bluetooth devices mac addresses
+	 * @return Vector of found devices
+	 */
     public Vector getDevices() {
         /* Create Vector variable */
         final Vector devicesDiscovered = new Vector();

@@ -10,16 +10,30 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * DeleteAttendance.java is used to remove attendance data from the database.
+ * @author Eddie Justice
+ *
+ */
 public class DeleteAttendance extends Thread
 {
 	private String user, cl;
+	/**
+	 * DeleteAttendance() constructs the necessary variables to process removing 
+	 * attendance data.
+	 * @param args String[0] user name
+	 *             String[1] class name
+	 */
 	public DeleteAttendance(String[] args)
 	{
 		this.user = args[0];
 		this.cl = args[1];
 		start();
 	}
-	
+	/**
+	 * run() establishes a connection to the database to remove a student's
+	 * attendance data
+	 */
 	public void run()
 	{
 		try

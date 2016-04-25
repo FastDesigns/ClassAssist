@@ -2,7 +2,17 @@ package com.classassist.fastdesigns.logic;
 
 import java.util.Vector;
 
+/**
+ * BluetoothDeviceVector.java is used to scan for Bluetooth devices and store.
+ * @author BLUECOVE editted by Chase Abe
+ *
+ */
 public class BluetoothDeviceVector {
+	/**
+	 * getMacVector() finds all available Bluetooth devices and returns a Vector<String>
+	 * of each device with name and MAC address.
+	 * @return list of found bluetooth devices
+	 */
 	public static Vector<String> getMacVector(){
 //		ServicesSearch ss = new ServicesSearch();
 		Vector<String> finalVector = new Vector<String>();

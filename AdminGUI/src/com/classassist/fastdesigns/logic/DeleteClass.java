@@ -7,10 +7,20 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * DeleteClass.java is used to remove a class from the database.
+ * @author Eddie Justice
+ *
+ */
 public class DeleteClass extends Thread
 {
 	private String user, className;
-	
+	/**
+	 * DeleteClass() constructs the necessary variables to process removing a 
+	 * class from the database.
+	 * @param u String user name (teacher)
+	 * @param c String class name
+	 */
 	public DeleteClass(String u, String c)
 	{
 		this.user = u;
@@ -18,6 +28,10 @@ public class DeleteClass extends Thread
 		this.start();
 	}
 	
+	/**
+	 * run() establishes a connection to the database and handles removing a 
+	 * class from a teacher
+	 */
 	public void run()
 	{
 		if(className.equals(""))

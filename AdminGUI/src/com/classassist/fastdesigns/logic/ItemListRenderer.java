@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * Custom renderer for jlist
- * @author djust
+ * @author Eddie Justice
  *
  */
 public class ItemListRenderer extends DefaultListCellRenderer

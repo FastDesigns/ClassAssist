@@ -8,19 +8,30 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import com.classassist.fastdesigns.gui.SelectClassScreen;
-
+/** 
+ * GetStudentList.java is used to get the student list from the database.
+ * @author Alex Morris
+ *
+ */
 public class GetStudentList extends Thread
 {
 	private SelectClassScreen screen;
 	private String clas;
-	
+	/**
+	 * GetStudentList() constructs the necessary variables to process getting the
+	 * student list.
+	 * @param s SelectClassScreen to display information in.
+	 * @param cl String class name
+	 */
 	public GetStudentList(SelectClassScreen s, String cl)
 	{
 		this.screen = s;
 		clas = cl;
 		this.start();
 	}
-	
+	/**
+	 * run() connects to the database and get the student list.
+	 */
 	public void run()
 	{
 		try

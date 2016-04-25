@@ -8,17 +8,29 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import com.classassist.fastdesigns.gui.SelectClassScreen;
-
+/**
+ * GetClassListForTeacher.java is used to connect the database and get the list
+ * of classes that a teacher has.
+ * @author Alex Morris
+ *
+ */
 public class GetClassListForTeacher
 {
 	private static String[] list;
 	private static SelectClassScreen select;
-	
+	/**
+	 * GetClassListForTeacher() is used to construct the variable used to 
+	 * retrieving the class list for a specified teacher.
+	 * @param s SelectClassScreen to display information in
+	 */
 	public GetClassListForTeacher(SelectClassScreen s)
 	{
 		select = s;
 	}
-		
+	/**
+	 * getClassList() is used to add a thread to the getClasses method.
+	 * @param args String[0] user name
+	 */
 	public static void getClassList (final String[] args)
     {
 		Thread thread = new Thread()

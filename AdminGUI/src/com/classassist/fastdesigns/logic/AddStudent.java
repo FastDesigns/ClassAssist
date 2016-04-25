@@ -7,6 +7,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * AddStudent.java is responsible for adding students to the database using php file on server.
+ * @author Eddie Justice 
+ *
+ */
 public class AddStudent extends Thread
 {
 	private String first, last, user, className;
@@ -20,6 +25,10 @@ public class AddStudent extends Thread
 		this.start();
 	}
 	
+	/** 
+	 * run() establishes a connection and writes the data to the database
+	 * 
+	 */
 	public void run()
 	{
 		if(first.equals("") || last.equals("") || user.equals(""))

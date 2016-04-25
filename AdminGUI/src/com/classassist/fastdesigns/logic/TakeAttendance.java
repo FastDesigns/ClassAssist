@@ -4,8 +4,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
+/**
+ * Takes the attendance for a class
+ * 
+ * @author Chase Abe
+ */
 public class TakeAttendance
 {
+	/**
+	 * Records the attendance for a class
+	 * @param className Class Name
+	 * @param date date
+	 */
 	public static void recordAttendance(final String className, final String date)
 	{
 		final Timer timer = new Timer();

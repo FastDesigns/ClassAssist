@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 /**
  * Creates a message dialog that appears for a few seconds then is disposed
- * @author djust
+ * @author Eddie Justice
  *
  */
 public class NewMessage extends JPanel
@@ -32,6 +32,10 @@ public class NewMessage extends JPanel
 	private Color color = new Color(255, 255, 255, alpha);
 	private Color outline = new Color(0, 0, 0, alpha);
 
+	/**
+	 * Constructor for a message
+	 * @param msg String of the message to display
+	 */
 	public NewMessage(String msg)
 	{
 		this.mess = msg;

@@ -6,9 +6,20 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-
+/**
+ * DesktopSignInActivity.java is used to connect to the databse and allow
+ * a user to log into the app.
+ * @author Eddie Justice
+ *
+ */
 public class DesktopSignInActivity{
-	
+	/**
+	 * logIn() is used to connect to the database and mark the user as 
+	 * logged in.
+	 * @param args String[0] = user name
+	 * 			   String[1] = password
+	 * @return boolean for whether login was successful or not
+	 */
 	public static boolean logIn (String[] args)
     {
         try

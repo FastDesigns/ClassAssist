@@ -7,7 +7,19 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * Gets the username of a student based on their MAC address
+ * 
+ * @author Alex Morris
+ *
+ */
 public class GetUserFromMac {
+	
+	/**
+	 * Queries the database for a students username given their MAC address
+	 * @param args MAC Address
+	 * @return Username of the student or the null string if the MAC address is not in the database
+	 */
 	public static String getUser (String args)
     {
         try

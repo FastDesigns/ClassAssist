@@ -6,17 +6,27 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-
+/**
+ * DeleteTeacher.java is used to remove a teacher from the database.
+ * @author Eddie Justice
+ *
+ */
 public class DeleteTeacher extends Thread
 {
 	private String name;
-	
+	/**
+	 * DeleteTeacher() is used to construct the necessary variables needed 
+	 * to remove a teacher from teh database.
+	 * @param n
+	 */
 	public DeleteTeacher(String n)
 	{
 		this.name = n;
 		this.start();
 	}
-	
+	/**
+	 * run() is used to connect to the database and remove a teacher.
+	 */
 	public void run()
 	{
 		try

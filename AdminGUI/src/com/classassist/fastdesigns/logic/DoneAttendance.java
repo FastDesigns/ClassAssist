@@ -6,18 +6,32 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-
+/**
+ * DoneAttendance.java is used to mark in the database the the teacher 
+ * is no longer taking attendance.
+ * @author Eddie Justice
+ *
+ */
 public class DoneAttendance extends Thread
 {
 	private String user, cl;
 	
+	/**
+	 * DoneAttendance() is used to contruct the necessary variables used to
+	 * mark that the teacher is no longer taking attendance in the database.
+	 * @param u String user (teacher)
+	 * @param c String class name
+	 */
 	public DoneAttendance(String u, String c)
 	{
 		this.user = u;
 		this.cl = c;
 		this.start();
 	}
-	
+	/**
+	 * run() connects to the database and marks the teachers as not taking 
+	 * attendance
+	 */
 	public void run()
 	{
 		try

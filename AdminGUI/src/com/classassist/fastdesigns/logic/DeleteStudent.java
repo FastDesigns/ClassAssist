@@ -6,18 +6,31 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-
+/**
+ * DeleteStudent.java is used to remove a student from a class in the 
+ * database.
+ * @author Eddie Justice
+ *
+ */
 public class DeleteStudent extends Thread
 {
 	private String name, className;
-	
+	/**
+	 * DeleteStudent() constructs the necessary variables to process
+	 * removing a student from a class in the database.
+	 * @param n String name (student)
+	 * @param c String class name
+	 */
 	public DeleteStudent(String n, String c)
 	{
 		this.name = n;
 		this.className = c;
 		this.start();
 	}
-	
+	/**
+	 * run() handles connecting to the database and removing the 
+	 * student from a class.
+	 */
 	public void run()
 	{
 		try

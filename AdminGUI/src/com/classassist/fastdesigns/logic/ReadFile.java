@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.omg.Messaging.SyncScopeHelper;
 // Help from: http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 /**
+ * Reads an excel file and imports it
  * 
  * @author Chase Abe
  * 
@@ -58,6 +59,12 @@ public class ReadFile {
 	private File input;
 	private String classname;
 	
+	/**
+	 * Constructs a ReadFile object
+	 * @param file File to read from
+	 * @param filename Name of the file
+	 * @param className Name of the class
+	 */
 	public ReadFile(File file, String filename, String className){
 		this.input = file;
 		this.inputFile = filename;
@@ -65,11 +72,18 @@ public class ReadFile {
 		this.classname = className;
 	}
 	
+	/**
+	 * Sets the input file
+	 * @param filename name of input file
+	 */
 	public void setInputFile(String filename) {
 		this.inputFile = filename;
 		this.extension = filename.substring(filename.length()-3, filename.length());
 	}
 
+	/**
+	 * Reads the file 
+	 */
 	public void read() throws IOException {
 		Boolean working = false;
 		FileInputStream file = new FileInputStream(input);
@@ -86,6 +100,10 @@ public class ReadFile {
 		
 	}
 	
+	/**
+	 * Reads an XLSX file
+	 * @param file XLSX file to read from
+	 */
 	public void XLSX(FileInputStream file){
 		try {
 			XSSFWorkbook book = new XSSFWorkbook(file);
@@ -100,6 +118,10 @@ public class ReadFile {
 		
 	}
 	
+	/**
+	 * Reads an XLS file
+	 * @param file XLS file to read from
+	 */
 	public void XLS(FileInputStream file) {
 		try {
 			HSSFWorkbook book = new HSSFWorkbook(file);
@@ -114,6 +136,10 @@ public class ReadFile {
 		}
 	}
 
+	/**
+	 * Reads an CSV file
+	 * @param file CSV file to read from
+	 */
 	public void CSV(FileInputStream file) {
 		int split, initial;
 		String line, first, last, username;
@@ -176,6 +202,10 @@ public class ReadFile {
 	}
 	
 
+	/**
+	 * Reads the contents of the file
+	 * @param rowIterator Row iterator for the file type selected
+	 */
 	public void dataHandler(Iterator<Row> rowIterator) {
 		int id;
 		int split;

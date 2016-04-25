@@ -30,6 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 // http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 /**
+ * Writes exported attendance files
  * 
  * @author Chase Abe
  *
@@ -44,7 +45,14 @@ public class WriteFile {
 	private boolean xlsx;
 	private FileOutputStream fileOut;
 
-	
+	/**
+	 * Constructor
+	 * @param classname Class Name
+	 * @param exportDate Export Date
+	 * @param f File Name
+	 * @param search Search Date
+	 * @param students Student List as an array
+	 */
 	public WriteFile(String classname, String exportDate, String f, String search,String[] students){
 		this.file = f;
 		this.className = classname;
@@ -142,8 +150,7 @@ public class WriteFile {
 		}
 	}
 	
-	
-	private void createXLS(FileOutputStream fileOut){
+		private void createXLS(FileOutputStream fileOut){
 		HSSFWorkbook work = new HSSFWorkbook();
 		HSSFSheet sheet =  work.createSheet(className);
 

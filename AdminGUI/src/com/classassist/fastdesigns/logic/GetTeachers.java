@@ -9,17 +9,29 @@ import java.net.URLEncoder;
 
 import com.classassist.fastdesigns.gui.SelectClassScreen;
 
+/**
+ * Gets the list of teachers for an admin
+ * @author Eddie Justice
+ *
+ */
 public class GetTeachers extends Thread
 {
 	private SelectClassScreen select;
 	private String[] list;
 	
+	/**
+	 * Gets the list of teachers
+	 * @param s Screen the method was called from
+	 */
 	public GetTeachers(SelectClassScreen s)
 	{
 		this.select = s;
 		this.start();
 	}
 	
+	/**
+	 * Run method
+	 */
 	public void run()
 	{
 		try
@@ -62,6 +74,10 @@ public class GetTeachers extends Thread
 	    }
 	}
 	
+	/**
+	 * Returns the list of teachers
+	 * @return teachers
+	 */
 	public String[] getList()
 	{
 		return list;

@@ -7,7 +7,18 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * Adds a student to a class
+ * @author Chase Abe
+ *
+ */
 public class SubmitClassList {
+	/**
+	 * Adds a student to a class
+	 * @param student Students username
+	 * @param classname Class name
+	 * @return True if the student is added, false is not
+	 */
 	public static boolean submitClass (String student, String classname)
     {
         try

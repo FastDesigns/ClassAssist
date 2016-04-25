@@ -6,8 +6,18 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-
+/**
+ * GetAttendance.java connects to the database and returns the attendance
+ * data
+ * @author Eddie Justice
+ *
+ */
 public class GetAttendance {
+	/**
+	 * getAttendance() is used to connect to the database and get the attendance.
+	 * @param args
+	 * @return
+	 */
 	public static String[] getAttendance (String[] args)
     {
         try

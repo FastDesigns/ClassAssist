@@ -10,7 +10,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Marks a student as Present
+ * @author Alex Morris
+ *
+ */
 public class SetAttendance {
+	/**
+	 * Sets the attendance of the given student as present
+	 * @param args[0] Student name
+	 * @param args[1] Class name
+	 * @return True if attendance set or False is attendance not set
+	 */
 	public static boolean setAttendance (String[] args)
     {
         try
@@ -23,8 +34,8 @@ public class SetAttendance {
             String username = get.getUser();
             if(get.getUser().equals(""))
             	username = args[0];
-            
         	String classname = args[1];
+        	
             String link = "https://php.radford.edu/~team05/studentattendance.php";
             String data = URLEncoder.encode("student", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("class", "UTF-8") + "=" + URLEncoder.encode(classname, "UTF-8");

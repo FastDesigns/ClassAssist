@@ -9,13 +9,15 @@ import java.util.Vector;
 
 import javax.bluetooth.*;
 
+/** 
+ * UUID used to find specific service supported by bluetooth device
+ * https://www.bluetooth.org/en-us/specification/assigned-numbers/service-discovery
+ * Find UUIDs for all types of bluetooth services.
+ * 
+ * @author BlueCove (Edited by Fast Designs)
+ */
 public class ServicesSearch {
 
-    /** 
-     * UUID used to find specific service supported by bluetooth device
-     * https://www.bluetooth.org/en-us/specification/assigned-numbers/service-discovery
-     * Find UUIDs for all types of bluetooth services.
-     */
     /* To find push object service */
     private UUID OBEX_OBJECT_PUSH_PROFILE = new UUID(0x1105);
     /* To find file transfer service */
