@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * Loading screen
  * @author djust
- *
+ * @version 1.0
  */
 public class PanelLoading extends JPanel
 {
@@ -26,6 +26,9 @@ public class PanelLoading extends JPanel
 	
 	private JLabel gif;
 	
+	/**
+	 * Sets the loading screen with it's initial values.
+	 */
 	public PanelLoading()
 	{
 		super();
