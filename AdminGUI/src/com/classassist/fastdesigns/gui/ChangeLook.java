@@ -3,8 +3,16 @@ package com.classassist.fastdesigns.gui;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+/**
+ * Manages the look and feel of the GUI.
+ * @author Fast Designs
+ * @version 1.0
+ */
 public class ChangeLook
 {
+	/**
+	 * Sets the LookAndFeel of the window to the File Chooser.
+	 */
 	public void fileChooserLook()
 	{
 		try
@@ -17,6 +25,9 @@ public class ChangeLook
 		}
 	}
 	
+	/**
+	 * Sets the LookAndFeel of the window to Nimbus.
+	 */
 	public void programLook()
 	{
 		try
