@@ -12,8 +12,19 @@ import javax.swing.plaf.ColorUIResource;
 import com.classassist.fastdesigns.gui.ChangeLook;
 import com.classassist.fastdesigns.gui.StartScreen;
 
+/**
+ * Driver.java
+ * 
+ * The driver for the Class Assist attendance tracking software.
+ * @author Fast Designs
+ * @version 1.0
+ */
 public class Driver
 {
+	/**
+	 * Initiates the program by invoking the StartScreen.
+	 * @param args No arguments
+	 */
 	public static void main(String[] args)
 	{
 		SwingUtilities.invokeLater(new Runnable()
