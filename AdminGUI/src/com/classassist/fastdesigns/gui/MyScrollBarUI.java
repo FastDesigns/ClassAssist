@@ -13,12 +13,20 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+/**
+ * A custom scroll bar for the GUI.
+ * @author Fast Designs
+ * @version 1.0
+ */
 public class MyScrollBarUI extends BasicScrollBarUI
 {
 	protected int scrollBarWidth = 500;
 	private Image increase;
 	private Image decrease;
 	
+	/**
+	 * Initializes the scroll bar with images.
+	 */
 	public MyScrollBarUI()
 	{
 		try
@@ -33,6 +41,9 @@ public class MyScrollBarUI extends BasicScrollBarUI
 	}
 	
 	@Override
+	/**
+	 * Sets the color of the thumb button of the scroll bar.
+	 */
 	protected void paintThumb(Graphics g, JComponent c, Rectangle r)
 	{
 		g.setColor(new Color(47, 196, 205));
@@ -40,6 +51,9 @@ public class MyScrollBarUI extends BasicScrollBarUI
 	}
 	
 	@Override
+	/**
+	 * Sets the color of the track of the scroll bar.
+	 */
 	protected void paintTrack(Graphics g, JComponent c, Rectangle r)
 	{
 		g.setColor(Color.darkGray);
@@ -47,6 +61,9 @@ public class MyScrollBarUI extends BasicScrollBarUI
 	}
 	
 	@Override
+	/**
+	 * Creates the decrease button of the scroll bar.
+	 */
 	protected JButton createDecreaseButton(int orientation)
 	{
 		JButton decreaseButton = new JButton(new ImageIcon(increase))
@@ -66,6 +83,9 @@ public class MyScrollBarUI extends BasicScrollBarUI
 	}
 	
 	@Override
+	/**
+	 * Creates the increase button of the scroll bar.
+	 */
 	protected JButton createIncreaseButton(int orientation)
 	{
 		JButton decreaseButton = new JButton(new ImageIcon(decrease))
