@@ -189,7 +189,7 @@ public class StudentMenu extends AppCompatActivity implements View.OnClickListen
         {
             public void run()
             {
-                if (result.equals(""))
+                if (result == null || result.equals(""))
                 {
                     addNewMac();
                 }
