@@ -7,7 +7,7 @@ import javax.swing.JButton;
 /**
  * Changes look and feel of buttons
  * @author djust
- *
+ * @version 1.0
  */
 public class MyButton extends JButton
 {
@@ -17,6 +17,10 @@ public class MyButton extends JButton
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Creates the button with its initial values.
+	 * @param text The button text
+	 */
 	public MyButton(String text)
 	{
 		super(text);
