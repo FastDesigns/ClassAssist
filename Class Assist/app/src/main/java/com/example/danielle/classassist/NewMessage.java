@@ -23,7 +23,7 @@ public class NewMessage
     {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(layout);
-        dialog.setTitle("Error");
+        dialog.setTitle("Notice");
         Button btnDismiss = (Button) dialog.findViewById(R.id.messagedismiss);
         TextView text = (TextView)dialog.findViewById(R.id.message);
         text.setText(m);
@@ -34,7 +34,7 @@ public class NewMessage
             {
                 dialog.cancel();
             }
-        });;
+        });
 
         dialog.show();
     }

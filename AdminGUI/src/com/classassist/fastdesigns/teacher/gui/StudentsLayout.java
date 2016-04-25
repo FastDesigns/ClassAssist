@@ -3,7 +3,6 @@ package com.classassist.fastdesigns.teacher.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -21,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 import com.classassist.fastdesigns.gui.MyButton;
 import com.classassist.fastdesigns.gui.SelectClassScreen;
 import com.classassist.fastdesigns.logic.TakeAttendance;
-import com.classassist.fastdesigns.logic.TakingAttendance;
 import com.classassist.fastdesigns.teacher.gui.AttendanceDisplay;
 /**
  * Layout and operations for exporting attendance
@@ -111,7 +109,6 @@ public class StudentsLayout extends JPanel
 	public void scanning()
 	{
 		scanPanel.setVisible(true);
-		new TakingAttendance(select.getUser(), select.getSelectedClass());
 	}
 	
 	public void notScanning()

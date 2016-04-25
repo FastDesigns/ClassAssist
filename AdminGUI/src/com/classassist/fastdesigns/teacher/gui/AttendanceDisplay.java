@@ -103,7 +103,7 @@ public class AttendanceDisplay extends JPanel
 		{
 			final String nam = n;
 			JLabel name = new JLabel(n);
-			JLabel mac = new JLabel("MAC ADDRESS HERE");
+			JLabel mac = new JLabel("");//possibly something else here
 			name.setFont(new Font(name.getName(), Font.PLAIN, 24));
 			mac.setFont(new Font(name.getName(), Font.PLAIN, 24));
 			JPanel s = new JPanel();
@@ -161,7 +161,7 @@ public class AttendanceDisplay extends JPanel
 							new UpdateStatus(names.get(i), statusList.get(i), select.getSelectedClass());
 						}
 					}
-				}, 20, 3);
+				}, 1000, 15000);
 			}
 		});
 		timerThread.start();
