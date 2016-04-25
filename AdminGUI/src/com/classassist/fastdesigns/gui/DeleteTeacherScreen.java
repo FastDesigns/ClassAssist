@@ -33,9 +33,9 @@ import com.classassist.fastdesigns.logic.FrameSize;
 import com.classassist.fastdesigns.logic.ItemListRenderer;
 
 /**
- * Delete teachers GUI
+ * The screen of the GUI responcible for deleting teachers.
  * @author djust
- *
+ * @version 1.0
  */
 public class DeleteTeacherScreen extends JPanel
 {
@@ -55,6 +55,10 @@ public class DeleteTeacherScreen extends JPanel
 	private JList<String> teachers = new JList<String>(new String[]{"Loading..."});
 	private JScrollPane teachersScroll = new JScrollPane(teachers);
 	
+	/**
+	 * Initiates the screen with the currently selected class.
+	 * @param s The SelectClassScreen of the program
+	 */
 	public DeleteTeacherScreen(SelectClassScreen s)
 	{
 		this.select = s;
@@ -211,21 +215,36 @@ public class DeleteTeacherScreen extends JPanel
 		new GetTeachers();
 	}
 	
+	/**
+	 * Sets the list of teachers.
+	 * @param l
+	 */
 	public void makeTeachers(String[] l)
 	{
 		teachers.setListData(l);
 		refresh();
 	}
 	
+	/**
+	 * A new thread which queries the database and deletes the selected teacher.
+	 * @author FastDesigns
+	 * @version 1.0
+	 */
 	public class GetTeachers extends Thread
 	{
 		private String[] list;
 		
+		/**
+		 * Initiates the threa on creation.
+		 */
 		public GetTeachers()
 		{
 			this.start();
 		}
 		
+		/**
+		 * Queries the database and remove the selected teacher.
+		 */
 		public void run()
 		{
 			try
